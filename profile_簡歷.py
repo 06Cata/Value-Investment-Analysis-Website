@@ -6,8 +6,8 @@ def main():
     # st.write('''聯絡方式:  [Linkedin](https://www.linkedin.com/in/catalina-k-3a63951a5/)''')
     st.markdown('''聯絡方式 :  <a href="mailto:catalinakuowork@gmail.com">Email</a>、
                 <a href="https://www.linkedin.com/in/catalina-k-3a63951a5/">Linkedin</a>、
-                <a href="https://github.com/06Cata/">Github</a>''', unsafe_allow_html=True)
-
+                <a href="https://github.com/06Cata/">Github</a>、
+                <a href="https://www.cakeresume.com/s--ef1WormNkeNevqLwaCXYow--/work-cata">一頁式履歷</a>''', unsafe_allow_html=True)
 
     # 
     st.write("")
