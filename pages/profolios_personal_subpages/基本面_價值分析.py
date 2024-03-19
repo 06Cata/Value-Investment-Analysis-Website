@@ -29,7 +29,7 @@ def fetch_data_prepared(stock_code):
         dfs, suss_tables = get_tables_of_dbtablename(stock_code)
     except Exception as e:
         st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
-        return None
+        return None, None
     
     # 創建可擴展區域
     with st.expander(f"用電腦更好看，已成功抓取到的資料"):
@@ -37,22 +37,26 @@ def fetch_data_prepared(stock_code):
                 st.write('很抱歉，沒有這檔股票的資料')
             else:
                 st.write(suss_tables)
-    
+                
     st.text("在非洲，每六十秒，就有一分鐘過去，但在這裡，我們不必等那麼久")
     
-    daily_df = read_daily_price_from_sqlite_for_pe_pb(stock_code, stock_size)
-    df_pe_pb = read__pe_pb_from_sqlite(stock_code, stock_size)
-    
+    try:
+        daily_df = read_daily_price_from_sqlite_for_pe_pb(stock_code, stock_size)
+        df_pe_pb = read__pe_pb_from_sqlite(stock_code, stock_size)
+    except Exception as e:
+        st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        return None
     
     # 創建可擴展區域_2
     with st.expander(f"已成功抓取到的盤後資料表"):
         st.write(daily_df)
         st.write(df_pe_pb)
         
-        
+    
+   
     merged_df = merge_daily_pe_pb(stock_size, daily_df, df_pe_pb)
     merge_eps_df = daily_eps(dfs)
-    
+
     
     return  merge_daily_pe_pb_eps(merged_df, merge_eps_df), dfs, stock_code
 
@@ -61,6 +65,7 @@ def fetch_data_prepared(stock_code):
 def analyze_daily_pe_pb(merged_df_2, dfs, stock_code):
     
     date_range = st.select_slider("選擇日期範圍", options=['1個月', '2個月', '3個月', '6個月', '1年', '1年6個月', '2年', '2年6個月', '3年'], value='3年')
+    
     merged_df_2_date = read_merged_df_2(merged_df_2, date_range)
         
     st.subheader("")
@@ -182,9 +187,13 @@ def main():
     
     stock_code = st.text_input("請輸入股票代碼：", value='1101')
     if st.button("查詢"):
-        merged_df_2, dfs, stock_code = fetch_data_prepared(stock_code)
         
-
+        try:
+            merged_df_2, dfs, stock_code = fetch_data_prepared(stock_code)
+        except Exception as e:
+            st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+            return None
+        
         if merged_df_2 is not None:
             st.session_state.merged_df_2 = merged_df_2
             st.session_state.dfs = dfs
