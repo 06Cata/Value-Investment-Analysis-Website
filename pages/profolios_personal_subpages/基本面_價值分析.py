@@ -37,7 +37,9 @@ def fetch_data_prepared(stock_code):
                 st.write('很抱歉，沒有這檔股票的資料')
             else:
                 st.write(suss_tables)
-                
+    
+    st.text("在非洲，每六十秒，就有一分鐘過去，但在這裡，我們不必等那麼久")
+    
     daily_df = read_daily_price_from_sqlite_for_pe_pb(stock_code, stock_size)
     df_pe_pb = read__pe_pb_from_sqlite(stock_code, stock_size)
     
