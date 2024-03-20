@@ -9,11 +9,8 @@ def main():
     # st.subheader("")
     
     # 添加連結到新分頁
-    page_selection = st.sidebar.radio("Go to", ["為什麼要投資","基本面_財報分析", "基本面_價值分析", "技術面比較",  # , "籌碼面"
-                                                "複利計算機", "買賣交易計算機"]) 
-    
-    if page_selection == "為什麼要投資":
-        為什麼要投資.main()
+    page_selection = st.sidebar.radio("Go to", ["基本面_財報分析", "基本面_價值分析", "技術面比較",  # , "籌碼面"
+                                                "為什麼要投資", "複利計算機", "買賣交易計算機"]) 
         
     if page_selection == "基本面_財報分析":
         基本面_財報分析.main()
@@ -26,6 +23,9 @@ def main():
         
     # elif page_selection == "籌碼面":
     #     籌碼面.main()
+    
+    elif page_selection == "為什麼要投資":
+        為什麼要投資.main()
     
     elif page_selection == "複利計算機":
         複利計算機.main()
