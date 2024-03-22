@@ -1,6 +1,5 @@
 import streamlit as st 
-import random
-import pandas as pd
+
 
 from pages.profolios_personal_subpages.tw_stock_crawler_030 import get_stock_code_industry, get_tables_of_dbtablename, plotly_eps, read__monthly_report_from_sqlite
 from pages.profolios_personal_subpages.tw_stock_crawler_030_1 import read__pe_pb_from_sqlite, read_daily_price_from_sqlite_for_pe_pb,\

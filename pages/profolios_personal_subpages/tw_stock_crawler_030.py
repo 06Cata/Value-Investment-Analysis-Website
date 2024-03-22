@@ -2,6 +2,21 @@
 # 基本面_財報分析 
 #%%
 
+import requests
+from bs4 import BeautifulSoup
+import os
+import re
+from fake_useragent import UserAgent
+from io import StringIO
+import json
+import pandas as pd
+import numpy as np
+import datetime, time, random
+import random
+import sqlite3
+import plotly.figure_factory as ff
+import plotly.graph_objects as go
+import plotly.express as px
 
 
 
@@ -12,16 +27,6 @@
 # 寫成function
 # 最多五次
 
-import requests
-import pandas as pd
-import json
-import re
-import sqlite3
-import os
-import datetime
-from fake_useragent import UserAgent
-import time
-import random
 
 def daily_price(date):
     url = f'https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?date={date}&type=ALLBUT0999&response=json&_=1706840905505'
@@ -48,7 +53,7 @@ def daily_price(date):
             current_retry += 1
             if current_retry < max_retries:
                 print(f'Retrying... ({current_retry}/{max_retries})')
-                time.sleep(5 + random.uniform(0, 5))  # 加入延遲時間
+                time.sleep(5 + random.uniform(0, 5)) 
             else:
                 print('Max retries reached. Exiting.')
                 raise  # 如果重試次數用完仍然失敗，拋出異常
@@ -60,15 +65,14 @@ def daily_price(date):
     
     df["漲跌(+/-)"] = df["漲跌(+/-)"].apply(lambda x: re.search(r'[-+]', x).group() if re.search(r'[-+]', x) else None)
     
-    # 如果有','(維持None)，先刪除
-    # df = df.applymap(lambda s: s.replace(',', '') if isinstance(s, str) else s)
+    # 
     df = df.apply(lambda col: col.apply(lambda x: x.replace(',', '') if isinstance(x, str) else x))
 
-    # 將指定的數值欄位轉換成數值型態
+    # 
     numeric_columns = ['成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比']
     df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric, errors='coerce')
 
-    # 將指定的字串欄位轉換成字串型態
+    # 
     string_columns = ['證券代號','證券名稱', '漲跌(+/-)']
     df[string_columns] = df[string_columns].astype(str)
     
@@ -88,9 +92,6 @@ def daily_price(date):
 # 改成可選日期範圍 
 # strftime('%Y%m%d') 方法，格式化字串
 
-import sqlite3
-import os
-import datetime
 
 def store_daily_price_to_sqlite(start_date, end_date):
     db_file = r'G:\我的雲端硬碟\000-AI\py\18-STOCK\tw_financial_reports\daily_price.db'
@@ -141,16 +142,6 @@ def store_daily_price_to_sqlite(start_date, end_date):
 # 最多五次
 
 
-import requests
-import pandas as pd
-import json
-import re
-import sqlite3
-import os
-import datetime
-from fake_useragent import UserAgent
-import time
-import random
 
 def daily_price_otc(date):
     
@@ -160,22 +151,22 @@ def daily_price_otc(date):
     day = date[6:8]
     url = f'https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&d={year}/{month}/{day}&se=EW&_=1710149320138'
 
-    # 生成隨機的使用者代理
+    # 
     ua = UserAgent()
     user_agent = ua.random
 
-    # headers 數據
+    # 
     headers = {
         'User-Agent': user_agent,
     }
 
-    max_retries = 5  # 最大重試次數
+    max_retries = 5 
     current_retry = 0
 
     while current_retry < max_retries:
         try:
             response = requests.get(url, headers=headers)
-            response.raise_for_status()  # 
+            response.raise_for_status()   
             break  
         except requests.exceptions.RequestException as e:
             print(f'Error connecting to the server: {e}')
@@ -227,10 +218,6 @@ def daily_price_otc(date):
 # 改成可選日期範圍 
 # strftime('%Y%m%d') 方法，格式化字串
 
-import sqlite3
-import os
-import datetime
-import time
 
 def store_daily_price_otc_to_sqlite(start_date, end_date):
     db_file = r'G:\我的雲端硬碟\000-AI\py\18-STOCK\tw_financial_reports\daily_price_otc.db'
@@ -250,7 +237,7 @@ def store_daily_price_otc_to_sqlite(start_date, end_date):
     
     while current_dt <= end_dt:
         current_date_str = current_dt.strftime('%Y%m%d')
-        table_name = f'daily_price_otc_2019'  # _{current_date_str}
+        table_name = f'daily_price_otc_2021'  # _{current_date_str}
         
         try:
             df = daily_price_otc(current_date_str)
@@ -283,12 +270,6 @@ def store_daily_price_otc_to_sqlite(start_date, end_date):
 # 包成def 
 # 加上提取欄位['年']、['月']
 
-import os
-import requests
-from bs4 import BeautifulSoup
-from io import StringIO
-import pandas as pd
-from fake_useragent import UserAgent
 
 
 def get_monthly_report(year, month):
@@ -315,11 +296,11 @@ def get_monthly_report(year, month):
     all_dfs = []
 
     for table_index in table_index_list:
-        # 提取產業類別
+        # 產業別
         industry_title_element = soup.find_all('th', class_='tt', align='left')[table_index]
         industry_title = industry_title_element.get_text(strip=True) if industry_title_element else None
 
-        # 提取表格數據
+        # 表格
         data_table_element = soup.find_all('td', colspan='2')[table_index]
         data_table_html = str(data_table_element)
         
@@ -343,7 +324,7 @@ def get_monthly_report(year, month):
         elif url.startswith('https://mops.twse.com.tw/nas/t21/otc'):
             df['上市櫃'] = '上櫃' 
 
-        # df['年月'] = f'{year}_{month}'
+
         df['年份'] = f'{year}'
         df['月份'] = f'{month}'
         
@@ -378,13 +359,7 @@ def get_monthly_report(year, month):
 # 迴圈印出所有產業別
 # 存進sqlite 單一table
 
-import os
-import requests
-from bs4 import BeautifulSoup
-from io import StringIO
-import pandas as pd
-import sqlite3
-import datetime, time, random
+
 
 def store_monthly_report_to_sqlite(start_date, end_date):
     db_file = r'G:\我的雲端硬碟\000-AI\py\18-STOCK\tw_financial_reports\monthly_report.db'
@@ -399,7 +374,7 @@ def store_monthly_report_to_sqlite(start_date, end_date):
     current_month = int(start_month)
     end_year = int(end_year) - 1911
 
-    # 定義表格欄位、數據類型
+    # 數據類型
     column_types = {
         '公司代號': 'TEXT',
         '公司名稱': 'TEXT',
@@ -456,19 +431,13 @@ def store_monthly_report_to_sqlite(start_date, end_date):
 # 有的公司會多兩欄，前一年度-01-10 資料
 # 金融保險業較特殊，會需要改payload
 
-import requests
-import pandas as pd 
-from io import StringIO
-from fake_useragent import UserAgent
 
 def get_bs_data(stock_code, year, quarter): 
     url = 'https://mops.twse.com.tw/mops/web/ajax_t164sb03'
 
-    # 生成隨機的使用者代理
     ua = UserAgent()
     user_agent = ua.random
 
-    # headers 數據
     headers = {
         'User-Agent': user_agent,
     }
@@ -667,16 +636,14 @@ def get_bs_data(stock_code, year, quarter):
 # 金融保險業較特殊，會需要改payload
 
 
-from fake_useragent import UserAgent
-
 def get_is_data(stock_code, year, quarter):
     url = 'https://mops.twse.com.tw/mops/web/ajax_t164sb04'
     
-    # 生成隨機的使用者代理
+
     ua = UserAgent()
     user_agent = ua.random
 
-    # headers 數據
+
     headers = {
         'User-Agent': user_agent,
     }
@@ -700,7 +667,7 @@ def get_is_data(stock_code, year, quarter):
         'season': quarter   
     }
 
-    # response = requests.post(url, data=payload)
+
     with requests.Session() as session:
         response = session.post(url, data=payload, headers=headers)
         
@@ -871,16 +838,10 @@ def get_is_data(stock_code, year, quarter):
 # 有的季度會有備註，最上面會多一個表格，需要改抓def[2]
 # 金融保險業較特殊，會需要改payload
 
-import requests
-import pandas as pd 
-from io import StringIO
-from fake_useragent import UserAgent
-
 
 def get_cfs_data(stock_code, year, quarter):
     url = 'https://mops.twse.com.tw/mops/web/ajax_t164sb05'
 
-    # 生成隨機的使用者代理
     ua = UserAgent()
     user_agent = ua.random
 
@@ -1097,7 +1058,7 @@ def get_cfs_data(stock_code, year, quarter):
 #         print(f'Error: {response.status_code}')
 #         return None
 
-#     # 解析 HTML 表格数据
+#     # 解析 HTML 
 #     dfs = pd.read_html(StringIO(response.text))
     
 #     result_dataframe = pd.DataFrame()
@@ -1140,12 +1101,6 @@ def get_cfs_data(stock_code, year, quarter):
 #%%
 # 三表一起查
 #  預設五年，kind 全印，單選一支標的
-import os
-import requests
-from bs4 import BeautifulSoup
-import time, random
-import sqlite3
-import datetime
 
 
 def store_3_financial_report_to_sqlite(stock_code, start_date=None, end_date=None):
@@ -1169,13 +1124,12 @@ def store_3_financial_report_to_sqlite(stock_code, start_date=None, end_date=Non
     end_year = int(end_date[:4]) - 1911
     end_month = int(end_date[4:6])
 
-    fail_count = 0  # 在這裡初始化 fail_count 變數
+    fail_count = 0 
     
     #
     conn2 = sqlite3.connect(db_path)
     cursor = conn2.cursor()
     
-    # 使用 SQL 查詢獲取所有表格名稱
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = cursor.fetchall()
     
@@ -1195,8 +1149,6 @@ def store_3_financial_report_to_sqlite(stock_code, start_date=None, end_date=Non
             "要抓五年的資料，不是這麼快的!",
             "有耐心者成大事!",
             "你這麼有耐心，果然是美女",
-            "帥哥都是很有耐心的，股市就是我的後宮！",
-            "有耐心就會爆富",
             "沒耐心怎麼賺得到波段?",
             "這比等大樂透開獎快吧?",
             "有耐心才不會投機，靠運氣來的錢，會靠實力虧光",
@@ -1241,7 +1193,6 @@ def store_3_financial_report_to_sqlite(stock_code, start_date=None, end_date=Non
                 quarter_without_0 = '4'
                 
             
-            # table 名稱辨識標誌
             table_name = f"{stock_code}_{current_year}Q{quarter_without_0}"
             
             
@@ -1319,7 +1270,7 @@ def store_3_financial_report_to_sqlite(stock_code, start_date=None, end_date=Non
 import tempfile
 
 def download_and_save_industry_db(stock_code):
-    # 下載數據庫文件
+
     url = f'https://github.com/06Cata/tw_financial_reports1/raw/main/industry.db'
     response = requests.get(url)
 
@@ -1340,7 +1291,6 @@ def get_stock_code_industry(stock_code):
     # 下載並保存數據庫文件
     temp_file_path = download_and_save_industry_db(stock_code)
 
-    # 連接 SQLite 數據庫
     conn = sqlite3.connect(temp_file_path)
     cursor = conn.cursor()
 
@@ -1367,6 +1317,33 @@ def get_stock_code_industry(stock_code):
         related_data = cursor.fetchall()
 
 
+
+    # # 提取公司名稱、公司規模、公司產業別及相關產業所有資料
+    # cursor.execute(f"""
+    #     SELECT i1.公司代號, i1.公司名稱, i1.上市櫃, i1.備註, i2.公司代號, i2.公司名稱, i2.上市櫃 
+    #     FROM industry_num AS i1 
+    #     JOIN industry_num AS i2 ON i1.備註 = i2.備註 
+    #     WHERE i1.公司代號={stock_code};
+    # """)
+    # results = cursor.fetchall()
+
+    # # 關閉游標和數據庫連接
+    # cursor.close()
+    # conn.close()
+
+    # if results:
+    #     stock_code = results[0][0]
+    #     stock_name = results[0][1]
+    #     stock_size = results[0][2]
+    #     stock_industry = results[0][3]
+    #     related_data = [(result[4], result[5], result[6]) for result in results]
+    # else:
+    #     stock_name = None
+    #     stock_size = None
+    #     stock_industry = None
+    #     related_data = None
+    
+    
 
     #     if related_data:
     #         print("同產業公司：")
@@ -1452,7 +1429,7 @@ def get_tables_of_dbtablename(stock_code):
             tables[f'year_{p}Q{n}_cfs'] = f'{stock_code}_{p}Q{n}_cfs'
             # tables[f'year_{p}Q{n}_sce'] = f'{stock_code}_{p}Q{n}_sce'
 
-    # 嘗試使用第一個 URL 下載數據庫文件，若失敗則使用第二個 URL
+    # 嘗試使用第一個 URL 下載數據庫文件，若失敗則使用第二個 URL...
     url1 = f'https://github.com/06Cata/tw_financial_reports1/raw/main/store_3_financial_report_{stock_code}.db'
     url2 = f'https://github.com/06Cata/tw_financial_reports2/raw/main/store_3_financial_report_{stock_code}.db'
     url3 = f'https://github.com/06Cata/tw_financial_reports3/raw/main/store_3_financial_report_{stock_code}.db'
@@ -1478,7 +1455,6 @@ def get_tables_of_dbtablename(stock_code):
     # 
     suss_tables = list(dfs.keys())
     
-    # 關閉 SQLite 資料庫連接
     conn.close()
     
     # 刪除臨時文件
@@ -1504,8 +1480,7 @@ def get_tables_of_dbtablename(stock_code):
 # 銀行業ok
 
 def plotly_debt_to_asset_ratio(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_dtar = []
 
     for key, value in dfs.items():
@@ -1583,8 +1558,6 @@ def plotly_debt_to_asset_ratio(dfs):
     # 
     # 四季
 
-    import numpy as np
-
     selected_rows['資產負債比%_調整'] = selected_rows['資產負債比%']
 
 
@@ -1603,7 +1576,6 @@ def plotly_debt_to_asset_ratio(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     selected_rows['is_above_60'] = selected_rows['資產負債比%'] > 60
@@ -1649,7 +1621,6 @@ def plotly_debt_to_asset_ratio(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     selected_rows['is_above_60'] = selected_rows['近四季平均資產負債比%_調整'] > 60
@@ -1702,8 +1673,7 @@ def plotly_debt_to_asset_ratio(dfs):
 # 銀行業不看
 
 def plotly_ratio_of_liabilities_to_assets(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_rolta = []
 
     for key, value in dfs.items():
@@ -1781,8 +1751,6 @@ def plotly_ratio_of_liabilities_to_assets(dfs):
     # 
     # 四季
 
-    import numpy as np
-
     selected_rows['長期資金佔不動產、廠房及設備比率(倍)_調整'] = selected_rows['長期資金佔不動產、廠房及設備比率(倍)']
 
 
@@ -1800,7 +1768,6 @@ def plotly_ratio_of_liabilities_to_assets(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     selected_rows['is_below_1'] = selected_rows['長期資金佔不動產、廠房及設備比率(倍)'] < 1
@@ -1848,7 +1815,6 @@ def plotly_ratio_of_liabilities_to_assets(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     selected_rows['is_below_1'] = selected_rows['近四季平均長期資金佔不動產、廠房及設備比率(倍)_調整'] < 1
@@ -1903,8 +1869,6 @@ def plotly_ratio_of_liabilities_to_assets(dfs):
 # 銀行業不看
 
 def plotly_business(dfs):
-    import pandas as pd
-    import numpy as np
 
     data_business = []
 
@@ -1990,8 +1954,6 @@ def plotly_business(dfs):
     # 
     # 四季
 
-    import numpy as np
-
     selected_rows['現金及約當現金_調整'] = selected_rows['現金及約當現金']
     selected_rows['流動負債合計_調整'] = selected_rows['流動負債合計']
     selected_rows['非流動負債合計_調整'] = selected_rows['非流動負債合計']
@@ -2028,7 +1990,6 @@ def plotly_business(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -2125,7 +2086,6 @@ def plotly_business(dfs):
     # fig.show()
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
 
@@ -2233,8 +2193,7 @@ def plotly_business(dfs):
 # 銀行業ok
 
 def plotly_total_debt_equity_ratio(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_tder = []
 
     for key, value in dfs.items():
@@ -2310,8 +2269,7 @@ def plotly_total_debt_equity_ratio(dfs):
     selected_rows.reset_index(drop=True, inplace=True)
 
     # 
-    import numpy as np
-
+    
     selected_rows['財務槓桿(倍)_調整'] = selected_rows['財務槓桿(倍)']
 
 
@@ -2330,7 +2288,6 @@ def plotly_total_debt_equity_ratio(dfs):
     
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     selected_rows['is_above_3'] = selected_rows['財務槓桿(倍)'] > 3
@@ -2379,7 +2336,6 @@ def plotly_total_debt_equity_ratio(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     selected_rows['is_above_3'] = selected_rows['近四季平均財務槓桿(倍)'] > 3
@@ -2434,8 +2390,7 @@ def plotly_total_debt_equity_ratio(dfs):
 # 銀行業ok、有些沒有保留盈餘、資本公積ok 
 
 def plotly_shareholders_equity(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_se = []
 
     for key, value in dfs.items():
@@ -2518,7 +2473,6 @@ def plotly_shareholders_equity(dfs):
 
  
     # 
-    import numpy as np
 
     selected_rows['股本合計_調整'] = selected_rows['股本合計']
     selected_rows['保留盈餘合計_調整'] = selected_rows['保留盈餘合計']
@@ -2546,7 +2500,6 @@ def plotly_shareholders_equity(dfs):
     
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -2620,7 +2573,6 @@ def plotly_shareholders_equity(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
 
@@ -2701,8 +2653,7 @@ def plotly_shareholders_equity(dfs):
 
 
 def plotly_roe(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_roe = []
 
     # ROE
@@ -2792,7 +2743,7 @@ def plotly_roe(dfs):
     
     # 
     # 單季
-    import numpy as np
+
 
     selected_rows['本期淨利（淨損）_調整'] = selected_rows['本期淨利（淨損）']
 
@@ -2823,7 +2774,7 @@ def plotly_roe(dfs):
     
     # 
     # 單季table
-    import plotly.figure_factory as ff
+    
 
     selected_rows_t = selected_rows.transpose()
     
@@ -2834,8 +2785,6 @@ def plotly_roe(dfs):
         
         
     # 
-    import plotly.figure_factory as ff
-
     # 提取 DataFrame 中的資料
     table_data = selected_rows_t.loc[['ROE%'], :]
     table_data = table_data.dropna(axis=1)
@@ -2886,8 +2835,7 @@ def plotly_roe(dfs):
 
         
         
-        # 
-    import plotly.graph_objects as go
+    # 
     fig2 = go.Figure()
 
     selected_rows_t_4q['is_below_10'] = selected_rows_t_4q ['近四季累計ROE%'] < 10
@@ -2939,8 +2887,7 @@ def plotly_roe(dfs):
 # 銀行業ok
 
 def plotly_roa(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_roa = []
 
     for key, value in dfs.items():
@@ -3025,7 +2972,6 @@ def plotly_roa(dfs):
 
     # 
     # 單季
-    import numpy as np
 
     selected_rows['本期淨利（淨損）_調整'] = selected_rows['本期淨利（淨損）']
 
@@ -3064,8 +3010,6 @@ def plotly_roa(dfs):
     
     
     # 
-    import plotly.figure_factory as ff
-
     # 提取 DataFrame 中的資料
     table_data = selected_rows_t.loc[['ROA%'], :]
     table_data = table_data.dropna(axis=1)
@@ -3118,7 +3062,6 @@ def plotly_roa(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
     selected_rows_t_4q['is_below_6'] = selected_rows_t_4q['近四季累計ROA%'] < 6
 
@@ -3170,8 +3113,7 @@ def plotly_roa(dfs):
 # 應收帳款、存貨周轉、應付帳款、總資產周轉、現金佔比
 
 def plotly_days_sales_outstanding(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_dso = []
 
     # 迴圈遍歷所有的 dfs
@@ -3264,8 +3206,6 @@ def plotly_days_sales_outstanding(dfs):
     # 將資料轉成 DataFrame
     result_df_dso = pd.DataFrame(data_dso)
 
-    import numpy as np
-
 
     #
     result_df_dso['年份'] = result_df_dso['年份-季度'].str[:3]
@@ -3325,7 +3265,6 @@ def plotly_days_sales_outstanding(dfs):
 
     # 
     # 單季
-    import numpy as np
 
     selected_rows['營業成本合計_調整'] = selected_rows['營業成本合計']
     selected_rows['營業收入合計_調整'] = selected_rows['營業收入合計']
@@ -3381,7 +3320,6 @@ def plotly_days_sales_outstanding(dfs):
     
     # 
     # 單季 table
-    import plotly.figure_factory as ff
 
     selected_rows_t = selected_rows.transpose()
 
@@ -3402,8 +3340,6 @@ def plotly_days_sales_outstanding(dfs):
         
 
     # 
-    import plotly.figure_factory as ff
-
 
     # 提取 DataFrame 中的資料
     table_data = selected_rows_t.loc[['總資產週轉','存貨週轉','應收週轉','應付週轉'], :].reset_index()
@@ -3493,7 +3429,6 @@ def plotly_days_sales_outstanding(dfs):
 
  
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     # 添加總資產年周轉(次)的長條圖
@@ -3534,7 +3469,6 @@ def plotly_days_sales_outstanding(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig22 = go.Figure()
 
 
@@ -3612,7 +3546,6 @@ def plotly_days_sales_outstanding(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig3 = go.Figure()
 
 
@@ -3709,7 +3642,6 @@ def plotly_days_sales_outstanding(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig4 = go.Figure()
 
 
@@ -3751,8 +3683,6 @@ def plotly_days_sales_outstanding(dfs):
 # 007-2包成def
 
 def plotly_fake(dfs):
-    import pandas as pd
-    import numpy as np
 
     data_fake = []
 
@@ -3920,7 +3850,6 @@ def plotly_fake(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -4008,7 +3937,6 @@ def plotly_fake(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
 
@@ -4060,8 +3988,7 @@ def plotly_fake(dfs):
 # 銀行業ok (改成利息收入/平均不動產、廠房及設備淨額)、沒有不動產就不顯示
 
 def plotly_fixed_asset_turnover_ratio(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_fatr = []
 
     # 迴圈遍歷所有的 dfs
@@ -4199,7 +4126,6 @@ def plotly_fixed_asset_turnover_ratio(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig01 = go.Figure()
 
 
@@ -4239,7 +4165,6 @@ def plotly_fixed_asset_turnover_ratio(dfs):
         
     
     # 
-    import plotly.graph_objects as go
     fig02 = go.Figure()
 
 
@@ -4291,8 +4216,7 @@ def plotly_fixed_asset_turnover_ratio(dfs):
 # 利息保障倍數 = 所得稅及利息費用前純益 /  本期利息支出
 
 def plotly_debt_paying_ability(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_dpa = []
 
     # 迴圈遍歷所有的 dfs
@@ -4412,13 +4336,12 @@ def plotly_debt_paying_ability(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     selected_rows['is_below_1'] = selected_rows['流動比率'] < 1
     selected_rows['is_below_11'] = selected_rows['速動比率'] < 1
 
-    # 添加總資產年周轉(次)的長條圖
+    # 
     fig.add_trace(go.Scatter(
         x=selected_rows['年份-季度'],
         y=selected_rows['流動比率'],
@@ -4431,7 +4354,7 @@ def plotly_debt_paying_ability(dfs):
         showlegend=False  # 隱藏 trace 的 legend
     ))
 
-    # 添加存貨年周轉(次)的折線圖
+    # 
     fig.add_trace(go.Scatter(
         x=selected_rows['年份-季度'],
         y=selected_rows['速動比率'],
@@ -4471,7 +4394,7 @@ def plotly_debt_paying_ability(dfs):
         height=400
     )
 
-    # 單獨添加自定義的 legend
+    # 自定的 legend
     fig.add_trace(go.Scatter(
         x=[None],
         y=[None],
@@ -4495,13 +4418,12 @@ def plotly_debt_paying_ability(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     selected_rows['is_below_1'] = selected_rows['流動比率'] < 1
     selected_rows['is_below_11'] = selected_rows['速動比率'] < 1
 
-    # 添加總資產年周轉(次)的長條圖
+    # 
     fig2.add_trace(go.Scatter(
         x=selected_rows['年份-季度'],
         y=selected_rows['近四季平均流動比率'],
@@ -4514,7 +4436,7 @@ def plotly_debt_paying_ability(dfs):
         showlegend=False  # 隱藏 trace 的 legend
     ))
 
-    # 添加存貨年周轉(次)的折線圖
+    # 
     fig2.add_trace(go.Scatter(
         x=selected_rows['年份-季度'],
         y=selected_rows['近四季平均速動比率'],
@@ -4554,7 +4476,7 @@ def plotly_debt_paying_ability(dfs):
         height=400
     )
 
-    # 單獨添加自定義的 legend
+    # 自定 legend
     fig2.add_trace(go.Scatter(
         x=[None],
         y=[None],
@@ -4591,11 +4513,10 @@ def plotly_debt_paying_ability(dfs):
 # 銀行業ok、有些繼續營業單位稅前損益要改 
 
 def plotly_tax(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_tax = []
 
-    # 迴圈遍歷所有的 dfs
+    # 
     for key, value in dfs.items():
         if key.endswith('_is'):
             row_data = {'年份-季度': key[5:10], 
@@ -4631,7 +4552,7 @@ def plotly_tax(dfs):
             # 
             data_tax.append(row_data)
 
-    # 將資料轉成 DataFrame
+    # 
     result_df_tax = pd.DataFrame(data_tax)
     
     
@@ -4691,8 +4612,6 @@ def plotly_tax(dfs):
     
     # 單季
 
-    import numpy as np
-
     selected_rows['稅前淨利（淨損）_調整'] = selected_rows['稅前淨利（淨損）']
     selected_rows['本期淨利（淨損）_調整'] = selected_rows['本期淨利（淨損）']
 
@@ -4737,7 +4656,6 @@ def plotly_tax(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -4780,7 +4698,6 @@ def plotly_tax(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
 
@@ -4826,8 +4743,7 @@ def plotly_tax(dfs):
 # ocf icf fcf
 
 def plotly_ocf_icf_fcf(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_ocf = []
 
     for key, value in dfs.items():
@@ -4946,7 +4862,6 @@ def plotly_ocf_icf_fcf(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -5027,7 +4942,6 @@ def plotly_ocf_icf_fcf(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
 
@@ -5103,8 +5017,6 @@ def plotly_ocf_icf_fcf(dfs):
     # 
     # 去年同期
 
-
-    import plotly.graph_objects as go
     fig3 = go.Figure()
 
     fig3.add_trace(go.Bar(
@@ -5161,8 +5073,7 @@ def plotly_ocf_icf_fcf(dfs):
 
 
 def plotly_ocf_ni(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_ocf_com = []
 
     for key, value in dfs.items():
@@ -5271,7 +5182,6 @@ def plotly_ocf_ni(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -5346,7 +5256,6 @@ def plotly_ocf_ni(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     fig2.add_trace(go.Bar(
@@ -5422,7 +5331,6 @@ def plotly_ocf_ni(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig3 = go.Figure()
 
     fig3.add_trace(go.Bar(
@@ -5509,9 +5417,6 @@ def plotly_ocf_ni(dfs):
 # 銀行業ok不用調
 
 def plotly_net_free_cash_flow(dfs):
-    import pandas as pd
-    import numpy as np
-    import pandas as pd
 
     data_cfs = []
 
@@ -5614,7 +5519,6 @@ def plotly_net_free_cash_flow(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -5676,7 +5580,6 @@ def plotly_net_free_cash_flow(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
 
@@ -5751,8 +5654,7 @@ def plotly_net_free_cash_flow(dfs):
 # 銀行業不看
 
 def plotly_cfr_3(dfs):
-    import pandas as pd
-    import numpy as np 
+
     data_cfr = []
 
     for key, value in dfs.items():
@@ -5853,7 +5755,6 @@ def plotly_cfr_3(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     selected_rows['is_below_100'] = selected_rows['現金流量比率%'] < 100
@@ -5900,7 +5801,6 @@ def plotly_cfr_3(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     selected_rows['is_below_100'] = selected_rows['近四季平均現金流量比率%'] < 100
@@ -5961,8 +5861,7 @@ def plotly_cfr_3(dfs):
 # 銀行業ok
 
 def plotly_cashncash_equivalents(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_cce = []
 
     for key, value in dfs.items():
@@ -6037,8 +5936,6 @@ def plotly_cashncash_equivalents(dfs):
     #   
     # 四季
 
-    import numpy as np
-
     selected_rows['現金佔比%_調整'] = selected_rows['現金佔比%']
 
 
@@ -6057,7 +5954,6 @@ def plotly_cashncash_equivalents(dfs):
 
     
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     selected_rows['is_above_10'] = selected_rows['現金佔比%'] < 10
@@ -6103,7 +5999,6 @@ def plotly_cashncash_equivalents(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     selected_rows['is_above_10'] = selected_rows['近四季平均現金佔比%_調整'] < 10
@@ -6158,8 +6053,7 @@ def plotly_cashncash_equivalents(dfs):
 
 
 def plotly_3_rate(dfs):
-    import numpy as np
-    import pandas as pd
+
     data_3_rate = []
 
     for key, value in dfs.items():
@@ -6266,8 +6160,6 @@ def plotly_3_rate(dfs):
 
     
     # 
-    import numpy as np
-    import pandas as pd
 
     selected_rows_copy = selected_rows.copy()
 
@@ -6315,7 +6207,6 @@ def plotly_3_rate(dfs):
 
     # 
     # 單季table
-    import plotly.figure_factory as ff
 
     selected_rows_t = selected_rows_copy.transpose()
 
@@ -6331,8 +6222,6 @@ def plotly_3_rate(dfs):
    
     
     # 
-    import plotly.figure_factory as ff
-
     table_data = selected_rows_t.loc[['毛利率%', '營益率%', '費用率%', '淨利率%'], :].reset_index()
     table_data = table_data.fillna('NaN')
     # table_data = table_data.dropna(axis=0)
@@ -6383,9 +6272,6 @@ def plotly_3_rate(dfs):
     # 
     # plotly color 
     # https://www.self-study-blog.com/dokugaku/python-plotly-color-sequence-scales/
-
-    import plotly.graph_objects as go
-    import plotly.express as px
 
     fig2 = go.Figure()
 
@@ -6441,8 +6327,6 @@ def plotly_3_rate(dfs):
     # plotly color 
     # https://www.self-study-blog.com/dokugaku/python-plotly-color-sequence-scales/
 
-    import plotly.graph_objects as go
-    import plotly.express as px
 
     fig3 = go.Figure()
 
@@ -6503,8 +6387,7 @@ def plotly_3_rate(dfs):
 
 
 def plotly_operating_margin_of_safety(dfs):
-    import numpy as np
-    import pandas as pd
+    
     data_omos = []
 
     for key, value in dfs.items():
@@ -6576,7 +6459,6 @@ def plotly_operating_margin_of_safety(dfs):
 
     # 
     # 單季
-    import numpy as np
 
     selected_rows['營業利益（損失）_調整'] = selected_rows['營業利益（損失）']
     selected_rows['營業毛利（毛損）淨額_調整'] = selected_rows['營業毛利（毛損）淨額']
@@ -6618,7 +6500,6 @@ def plotly_operating_margin_of_safety(dfs):
 
     
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     selected_rows['is_below_50'] = selected_rows['經營安全邊際%'] < 50
@@ -6664,7 +6545,6 @@ def plotly_operating_margin_of_safety(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     selected_rows['is_below_50'] = selected_rows['近四季平均經營安全邊際%'] < 50
@@ -6721,8 +6601,7 @@ def plotly_operating_margin_of_safety(dfs):
 
 
 def plotly_year_revenue(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_year_revenue = []
 
     for key, value in dfs.items():
@@ -6807,7 +6686,6 @@ def plotly_year_revenue(dfs):
 
     #
     # 單季
-    import numpy as np
 
     selected_rows['營業收入合計_調整'] = selected_rows['營業收入合計']
     selected_rows['本期淨利（淨損）_調整'] = selected_rows['本期淨利（淨損）']
@@ -6874,9 +6752,6 @@ def plotly_year_revenue(dfs):
 
 
     # 
-    import plotly.graph_objects as go
-    import plotly.express as px
-
     fig = go.Figure()
 
     fig.add_trace(go.Bar(x=selected_rows['年份-季度'], 
@@ -6927,9 +6802,6 @@ def plotly_year_revenue(dfs):
     
     
     # 
-    import plotly.graph_objects as go
-    import plotly.express as px
-
     fig2 = go.Figure()
 
     fig2.add_trace(go.Bar(x=selected_rows['年份-季度'], 
@@ -6991,8 +6863,7 @@ def plotly_year_revenue(dfs):
 
 def plotly_4q_revenue_growth_rate(dfs):
     # 穿插月報、與去年同月比較
-    import pandas as pd
-    import numpy as np
+
     data_grp = []
 
     for key, value in dfs.items():
@@ -7184,7 +7055,6 @@ def plotly_4q_revenue_growth_rate(dfs):
 
 
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
 
@@ -7254,7 +7124,6 @@ def plotly_4q_revenue_growth_rate(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
 
@@ -7308,7 +7177,6 @@ def plotly_4q_revenue_growth_rate(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig33 = go.Figure()
 
     fig33.add_trace(go.Scatter(
@@ -7377,8 +7245,7 @@ def plotly_4q_revenue_growth_rate(dfs):
 # 銀行業不看
 
 def plotly_non_operating_earnings(dfs):
-    import pandas as pd
-    import numpy as np
+
     data_oi_p = []
 
     for key, value in dfs.items():
@@ -7515,8 +7382,6 @@ def plotly_non_operating_earnings(dfs):
 
 
     # 
-    import plotly.graph_objects as go
-    import plotly.express as px
     fig = go.Figure()
 
 
@@ -7585,8 +7450,6 @@ def plotly_non_operating_earnings(dfs):
 
 
     # 
-    import plotly.graph_objects as go
-    import plotly.express as px
     fig2 = go.Figure()
 
 
@@ -7738,8 +7601,6 @@ def plotly_eps(dfs):
 
 
     #
-    import math
-    import numpy as np
 
     selected_rows['基本每股盈餘_調整'] = selected_rows['基本每股盈餘']
 
@@ -7780,7 +7641,7 @@ def plotly_eps(dfs):
 
     selected_rows_t = selected_rows.transpose()
 
-    # # 選擇 "年份-季度" 和 "ROE%" 這兩列
+    # 
     selected_columns = ['年份-季度', '基本每股盈餘_調整']
     selected_rows_t = selected_rows_t[selected_rows_t.index.isin(selected_columns)]
     selected_rows_t.columns = selected_rows_t.iloc[0]
@@ -7790,7 +7651,7 @@ def plotly_eps(dfs):
     # 
     import plotly.figure_factory as ff
 
-    # 提取 DataFrame 中的資料
+    # 提取 
     table_data = selected_rows_t.loc[['基本每股盈餘_調整'], :]
     table_data = table_data.fillna('NaN')
 
@@ -7816,7 +7677,6 @@ def plotly_eps(dfs):
 
     
     # 
-    import plotly.graph_objects as go
     fig2 = go.Figure()
 
     #  
@@ -7870,7 +7730,6 @@ def plotly_eps(dfs):
     
     
     # 
-    import plotly.graph_objects as go
     fig3 = go.Figure()
 
     #  
@@ -7916,10 +7775,6 @@ def plotly_eps(dfs):
 # 007-2 包成de
 # 月報看每月營收
 
-import sqlite3
-import pandas as pd
-import requests
-import tempfile
 
 def download_and_save_monthly_report_db():
     # 下載數據庫文件
@@ -7939,31 +7794,24 @@ def download_and_save_monthly_report_db():
 #%%
 
 def read__monthly_report_from_sqlite(stock_code):
-    # 下載並保存數據庫文件
+
     db_file_path = download_and_save_monthly_report_db()
 
-    # 連接 SQLite 數據庫
+    # 
     conn = sqlite3.connect(db_file_path)
-    
-    # 設定表名
     table_name = 'monthly_report_2019'
-    
-    # 構建 SQL 查詢語句
     query = f"SELECT DISTINCT * FROM {table_name} WHERE 公司代號='{stock_code}' GROUP BY 年份, CAST(月份 AS INTEGER)"
-    
-    # 從數據庫中讀取數據到 DataFrame
     df_monthly = pd.read_sql_query(query, conn)
     
     # 添加年月列和成長率列
     df_monthly['年月'] = df_monthly['年份'] + '-' + df_monthly['月份']
     # df_monthly['成長率%'] = round((df_monthly['當月營收'] - df_monthly['去年當月營收']) / df_monthly['去年當月營收'] *100, 2)
 
-    # 關閉數據庫連接
+    # 
     conn.close()
     
     
     # 
-    import plotly.graph_objects as go
     fig = go.Figure()
 
     fig.add_trace(go.Bar(x=df_monthly['年月'], 
