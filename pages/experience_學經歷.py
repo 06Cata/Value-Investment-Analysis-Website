@@ -24,9 +24,7 @@ def main():
     st.subheader("西班牙語業務 • 數位行銷")
     st.write("**CARICO ENTERPRISE CO., LTD, 新北市 ( Mar, 2020 - Feb, 2023 ) 三年**")
     st.write("業務開發 : 負責開發和維繫拉丁美洲B2B市場，定期組織與經理簡報，確保為客戶高效地解決問題，開發過薩爾瓦多、宏都拉斯、英國的第一個長期客戶。") 
-    st.write("數位行銷 : 與媒體公司的合作中，開啟新的西班牙語網站專案，每日訪客人數從10~20人/日到，平均超過300人/日，增長率超過 1400%；\
-                開啟新的 SEO 項目、投放廣告及制定關鍵字計畫，使用 Google Analystic, Google Search Console, Ads, GTM，讓至少三個目標\
-                關鍵詞上台灣Google搜索引擎首頁排名。") 
+    st.write("數位行銷 : 提議公司導入Google Analystic, Google Search Console, Ads, GTM，並在與媒體公司的合作中，開啟新的西班牙語網站專案，每日訪客人數從10~20人/日到，平均超過300人/日，增長率超過 1400%；開啟新的 SEO 項目、制定關鍵字計畫，讓至少三個目標關鍵詞上台灣Google搜索引擎首頁排名。") 
     st.write("這些經歷讓我發現自己對資料分析的興趣，搜尋很多資訊後，找到勞動部提供資源的產業新尖兵計畫，其中的AI 大數據人才養成班也成為我轉職的契機。") 
     st.subheader("")
     st.subheader("")
