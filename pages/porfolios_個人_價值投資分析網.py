@@ -6,6 +6,9 @@ from pages.profolios_personal_subpages import  基本面_財報分析, 基本面
 
 def main():
     st.title("價值投資分析網")
+    st.write('''爬蟲爬取資產負債表、損益表、現金流量表、盤後資料存進sqlite，
+             主要使用pandas整理，plotly繪圖。代碼上傳到github，部屬在streamlit上。使用者送出公司代號後，會下載github上的db，繪製相關指標
+            ''')
     # st.subheader("")
     
     # 添加連結到新分頁
