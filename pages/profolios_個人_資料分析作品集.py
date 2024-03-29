@@ -21,7 +21,13 @@ def main():
     url = "https://hackmd.io/@workcata/HyAT-KhJp"
     st.components.v1.iframe(url, height=400) 
     st.subheader(" ")
+    st.subheader(" ")
     
+    st.write("[★ 個人對資料分析的理解](https://docs.google.com/document/d/1Rc2MGMd14DQ0x_Z-9Rr5_LaAjLJ6RKy0/edit?usp=sharing&ouid=105016364475687404819&rtpof=true&sd=true)")
+    url = "https://docs.google.com/document/d/1Rc2MGMd14DQ0x_Z-9Rr5_LaAjLJ6RKy0/edit?usp=sharing&ouid=105016364475687404819&rtpof=true&sd=true"
+    st.components.v1.iframe(url, height=400) 
+    st.subheader(" ")
+    st.subheader(" ")
 
 if __name__ == '__main__':
     main()
