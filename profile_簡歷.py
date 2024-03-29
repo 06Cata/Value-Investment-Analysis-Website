@@ -40,6 +40,10 @@ def main():
     
     # 
     st.write("學習筆記 : ")
+    st.write("[【Python 視覺化 : Matplotlib (Seaborn)、Plotly】](https://hackmd.io/@workcata/Hk6yp_ay6)")
+    url = "https://hackmd.io/@workcata/Hk6yp_ay6"
+    st.components.v1.iframe(url, height=350) 
+    st.subheader(" ")
     st.write("[【Apache Spark 巨量資料探勘分析】ft.PySpark](https://hackmd.io/@workcata/rkQXQY2Ja)")
     url = "https://hackmd.io/@workcata/rkQXQY2Ja"
     st.components.v1.iframe(url, height=350) 
@@ -48,16 +52,8 @@ def main():
     url = "https://hackmd.io/@workcata/BkWZ13NJ6"
     st.components.v1.iframe(url, height=350) 
     st.subheader(" ")
-    st.write("[【Python 視覺化 : Matplotlib (Seaborn)、Plotly】](https://hackmd.io/@workcata/Hk6yp_ay6)")
-    url = "https://hackmd.io/@workcata/Hk6yp_ay6"
-    st.components.v1.iframe(url, height=350) 
-    st.subheader(" ")
-    st.write("[【資料分析作品集 My data analysis portfolio】](https://hackmd.io/@workcata/r1YTA_IMp)")
-    url = "https://hackmd.io/@workcata/r1YTA_IMp"
-    st.components.v1.iframe(url, height=380) 
-    st.subheader(" ")
- 
     
+
     
 
 
