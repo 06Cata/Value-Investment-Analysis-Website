@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd 
 
 def main():
-    st.header("資料分析作品集:")
+    st.title("資料分析作品集")
     st.subheader(" ")
     
     st.write("[★ 【潛力產品、店家銷售分析 Potential products and store sales analysis】- EXCEL](https://hackmd.io/@workcata/SyERmB--T)")
