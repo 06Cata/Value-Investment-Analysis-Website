@@ -25,7 +25,7 @@ def main():
     
     st.write("[★ 個人對資料分析的理解、數據相關工作經驗](https://docs.google.com/document/d/1Rc2MGMd14DQ0x_Z-9Rr5_LaAjLJ6RKy0/edit?usp=sharing&ouid=105016364475687404819&rtpof=true&sd=true)")
     url = "https://docs.google.com/document/d/1Rc2MGMd14DQ0x_Z-9Rr5_LaAjLJ6RKy0/edit?usp=sharing&ouid=105016364475687404819&rtpof=true&sd=true"
-    st.components.v1.iframe(url, height=600, width=700) 
+    st.components.v1.iframe(url, height=600, width=900) 
     st.subheader(" ")
     st.subheader(" ")
 
