@@ -1,5 +1,6 @@
 import streamlit as st 
 import pandas as pd 
+import streamlit.components.v1 as components
 
 def main():
     st.header("Catalina Kuo 郭品妤 簡歷")
