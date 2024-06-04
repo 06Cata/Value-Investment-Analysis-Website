@@ -72,7 +72,7 @@ six
 smmap
 soupsieve
 stack-data
-streamlit==1.8.0
+streamlit
 tenacity
 threadpoolctl
 toml
