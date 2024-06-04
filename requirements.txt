@@ -1,4 +1,4 @@
-altair
+altair==4.2.2
 apyori
 asttokens
 attrs
@@ -7,7 +7,7 @@ blinker
 cachetools
 certifi
 charset-normalizer
-click
+click==8.0.0
 colorama
 comm
 contourpy
@@ -51,7 +51,7 @@ pip
 platformdirs
 plotly
 prompt-toolkit
-protobuf
+protobuf==3.20.3
 psutil
 pure-eval
 pyarrow
@@ -72,7 +72,7 @@ six
 smmap
 soupsieve
 stack-data
-streamlit
+streamlit==1.8.0
 tenacity
 threadpoolctl
 toml
