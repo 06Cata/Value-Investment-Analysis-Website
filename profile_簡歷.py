@@ -9,10 +9,11 @@ def main():
                 <a href="https://github.com/06Cata/">Github</a>、
                 <a href="https://www.cakeresume.com/s--ef1WormNkeNevqLwaCXYow--/work-cata">PDF履歷</a>''', unsafe_allow_html=True)
 
+
     # 
     st.write("")
     st.write('''大學主修西班牙語商業組，輔華語教學。擔任過一年的華語教師、三年的汽車零件業西班牙語業務。
-             工作中使用過一些軟體， 我發現自己對於資料有著濃厚的興趣， 2023年決定轉職， 並報名了文化大學推廣部和程式驅動合作的「AI 大數據人才養成班」。
+             工作中使用過一些軟體， 我發現自己對於資料有著濃厚的興趣， 2023年決定轉職， 並報名了文化大學推廣部和程式驅動合作的「大數據人才養成班」。
              我相信有興趣才能走得遠，希望能透過工作加深更多相關技能， 可以透過 Email、Linkedin 聯絡我😊''')
     st.subheader(" ")
     st.subheader(" ")
@@ -48,14 +49,18 @@ def main():
     url = "https://hackmd.io/@workcata/rkQXQY2Ja"
     st.components.v1.iframe(url, height=350) 
     st.subheader(" ")
+    st.write("[【回歸模型評估: MAE、MAPE、SSE、MSE、RMSE、R²】](https://hackmd.io/@workcata/rk6YuVfNA)")
+    url = "https://hackmd.io/@workcata/rk6YuVfNA"
+    st.components.v1.iframe(url, height=350) 
+    st.subheader(" ")
     st.write("[【 Mysql 系統權限操作】](https://hackmd.io/@workcata/BkWZ13NJ6)")
     url = "https://hackmd.io/@workcata/BkWZ13NJ6"
     st.components.v1.iframe(url, height=350) 
     st.subheader(" ")
     
 
+ 
     
-
 
 if __name__ == '__main__':
     main()

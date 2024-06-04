@@ -7778,7 +7778,7 @@ def plotly_eps(dfs):
 
 def download_and_save_monthly_report_db():
     # 下載數據庫文件
-    url = 'https://github.com/06Cata/tw_financial_reports1/raw/main/monthly_report.db'
+    url = 'https://github.com/06Cata/tw_financial_reports3/raw/main/monthly_report.db'
     response = requests.get(url)
 
     # 將數據保存到臨時文件中
@@ -7800,7 +7800,8 @@ def read__monthly_report_from_sqlite(stock_code):
     # 
     conn = sqlite3.connect(db_file_path)
     table_name = 'monthly_report_2019'
-    query = f"SELECT DISTINCT * FROM {table_name} WHERE 公司代號='{stock_code}' GROUP BY 年份, CAST(月份 AS INTEGER)"
+    # query = f"SELECT DISTINCT * FROM {table_name} WHERE 公司代號='{stock_code}' GROUP BY 年份, CAST(月份 AS INTEGER)"
+    query = f"SELECT DISTINCT * FROM {table_name} WHERE 公司代號='{stock_code}'"
     df_monthly = pd.read_sql_query(query, conn)
     
     # 添加年月列和成長率列

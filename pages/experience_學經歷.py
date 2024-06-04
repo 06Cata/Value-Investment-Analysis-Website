@@ -11,6 +11,17 @@ def main():
     st.subheader("")
     
     
+    st.subheader("大數據研究員")
+    st.write("**在職中 ( Apr, 2024 -  )**")
+    st.write("接案為主的乙方，主要做資料研究及量化商業分析")
+    st.write("根據客戶產業，設置關鍵字、排除字，從資料庫提取的資料，做資料清整")
+    st.write("與同事共同維護機器學習模型做產品分類")
+    
+    st.write("Tableau 商業報表建立、數據解讀")
+    st.subheader("")
+    st.subheader("")
+    
+    
     st.subheader("AI 大數據人才養成班")
     st.write("**文化大學推廣部+程式驅動 ( Mar, 2023 - Sep, 2023 ) 半年**")
     st.write("在養成班中，學習了Linux、Python、資料庫、視覺化、分佈式系統、Git等技能。後期利用實習的機會，學習ELK平臺，做了\

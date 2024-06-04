@@ -1,8 +1,7 @@
 import streamlit as st 
-import random
-import os
 from urllib.parse import quote
 from requests.exceptions import HTTPError
+import random
 
 from pages.profolios_personal_subpages.tw_stock_crawler_030 import get_tables_of_dbtablename, get_stock_code_industry, \
 plotly_ocf_icf_fcf, plotly_ocf_ni, plotly_net_free_cash_flow, plotly_business, plotly_shareholders_equity, \
@@ -19,10 +18,10 @@ def main():
     st.write('''巴菲特曾說 "You make your money when you buy, not when you sell."，買企業，不是買股票，投資者應該專注於評估企業的基本價值，並長期持有，勝率更大  
              ''')  
 
-    st.write('''資料來源: "公開資訊觀測站"，讀取資料庫 [(1)](https://github.com/06Cata/tw_financial_reports1)、[(2)](https://github.com/06Cata/tw_financial_reports2)，
-             以上觀點僅供參考，並不構成任何交易建議或推薦。數值太接近，折線圖有可能重疊，可以分別點擊查看''')
+    st.write('''資料來源: "公開資訊觀測站"，讀取資料庫 [(1)](https://github.com/06Cata/tw_financial_reports1)、[(2)](https://github.com/06Cata/tw_financial_reports2)、\
+            [(3)](https://github.com/06Cata/tw_financial_reports3)。以上觀點僅供參考，並不構成任何交易建議或推薦。數值太接近，折線圖有可能重疊，可以分別點擊查看''')
 
-    stock_code = st.text_input("請輸入股票代碼：", value='1101')
+    stock_code = st.text_input("請輸入股票代碼：", value='2885')
 
     if st.button("查詢"):
         loading_messages = [

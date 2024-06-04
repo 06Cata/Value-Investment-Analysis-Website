@@ -13,9 +13,9 @@ from datetime import datetime, timedelta
 def download_daily_price_db(stock_size):
     
     if stock_size == '上市':
-        url = 'https://github.com/06Cata/tw_financial_reports2/raw/main/daily_price.db'
+        url = 'https://github.com/06Cata/tw_financial_reports3/raw/main/daily_price.db'
     elif stock_size == '上櫃':
-        url = 'https://github.com/06Cata/tw_financial_reports2/raw/main/daily_price_otc.db'
+        url = 'https://github.com/06Cata/tw_financial_reports3/raw/main/daily_price_otc.db'
     
     response = requests.get(url)
     temp_file = tempfile.NamedTemporaryFile(delete=False)

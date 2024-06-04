@@ -1,5 +1,6 @@
 import streamlit as st 
-
+import random
+import pandas as pd
 
 from pages.profolios_personal_subpages.tw_stock_crawler_030 import get_stock_code_industry, get_tables_of_dbtablename, plotly_eps, read__monthly_report_from_sqlite
 from pages.profolios_personal_subpages.tw_stock_crawler_030_1 import read__pe_pb_from_sqlite, read_daily_price_from_sqlite_for_pe_pb,\
@@ -181,10 +182,10 @@ def main():
     st.write('''選擇好的股票只是投資的第一步，更重要的是在適當的時間，以合理的價格買進  
              價值投資者通常專注於股票的內在價值，尋找被低估的股票，以便在未來獲得良好的回報
              ''')  
-    st.write('''資料來源: "公開資訊觀測站"、"台灣證券交易所"、"證券櫃檯買賣中心"，讀取資料庫 [(1)](https://github.com/06Cata/tw_financial_reports1)、[(2)](https://github.com/06Cata/tw_financial_reports2)，
-             以上觀點僅供參考，並不構成任何交易建議或推薦。直接拖拉圖片可以放大，右上角🏛️可以重置''')
+    st.write('''資料來源: "公開資訊觀測站"、"台灣證券交易所"、"證券櫃檯買賣中心"，讀取資料庫 [(1)](https://github.com/06Cata/tw_financial_reports1)、[(2)](https://github.com/06Cata/tw_financial_reports2)、\
+            [(3)](https://github.com/06Cata/tw_financial_reports3)。以上觀點僅供參考，並不構成任何交易建議或推薦。直接拖拉圖片可以放大，右上角🏛️可以重置''')
     
-    stock_code = st.text_input("請輸入股票代碼：", value='1101')
+    stock_code = st.text_input("請輸入股票代碼：", value='2885')
     if st.button("查詢"):
         
         try:

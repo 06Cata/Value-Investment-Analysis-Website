@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd 
 import numpy as np 
 import plotly.express as px 
-from pages.profolios_personal_subpages import  基本面_財報分析, 基本面_價值分析, 技術面比較, 為什麼要投資, 買賣交易計算機, 複利計算機   # , 籌碼面
+from pages.profolios_personal_subpages import  為什麼要投資, 基本面_財報分析, 基本面_價值分析, 技術面比較, 買賣交易計算機, 複利計算機   # , 籌碼面
 
 def main():
     st.title("價值投資分析網")

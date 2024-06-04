@@ -16,9 +16,10 @@ import os
 def download_and_save_pe_pb_db(stock_size):
     # 下載數據庫文件
     if stock_size == '上市':
-        url = 'https://github.com/06Cata/tw_financial_reports2/raw/main/daily_pe_pb.db'
+        url = 'https://github.com/06Cata/tw_financial_reports3/raw/main/daily_pe_pb.db'
+        
     elif stock_size == '上櫃':
-        url = 'https://github.com/06Cata/tw_financial_reports2/raw/main/daily_pe_pb_otc.db'
+        url = 'https://github.com/06Cata/tw_financial_reports3/raw/main/daily_pe_pb_otc.db'
         
     response = requests.get(url)
 
@@ -49,9 +50,9 @@ def read__pe_pb_from_sqlite(stock_code, stock_size):
 def download_daily_price_db_for_pe_pb(stock_size):
     
     if stock_size == '上市':
-        url = 'https://github.com/06Cata/tw_financial_reports2/raw/main/daily_price.db'
+        url = 'https://github.com/06Cata/tw_financial_reports3/raw/main/daily_price.db'
     elif stock_size == '上櫃':
-        url = 'https://github.com/06Cata/tw_financial_reports2/raw/main/daily_price_otc.db'
+        url = 'https://github.com/06Cata/tw_financial_reports3/raw/main/daily_price_otc.db'
     
     response = requests.get(url)
     temp_file = tempfile.NamedTemporaryFile(delete=False)
