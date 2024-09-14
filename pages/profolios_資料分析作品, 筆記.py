@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd 
 
 def main():
-    st.title("資料分析作品集, 筆記")
+    st.title("資料分析作品, 筆記")
     st.subheader(" ")
     
     st.write("[★【分類模型評估: 二元混淆矩陣、ROC 曲線、多元混淆矩陣】](https://hackmd.io/@workcata/S1BjWGGE0)")
