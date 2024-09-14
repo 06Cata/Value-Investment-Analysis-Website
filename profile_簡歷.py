@@ -24,7 +24,7 @@ def main():
     
     # 
     data = {
-        'Python': ['Pandas, Numpy', 'Plotly, Matplotlib, Jieba','Requests, Selenium', 'Streamlit'],
+        'Python': ['Pandas, Numpy', 'Plotly, Matplotlib','Requests, Selenium', 'Streamlit'],
         '資料庫': ['Mysql', 'MSSQL', 'SQlite', 'MongoDB'],
         '視覺化': ['Tableau', 'Power BI','Excel',''],
         '雲端': ['GCP','Azure','','']
