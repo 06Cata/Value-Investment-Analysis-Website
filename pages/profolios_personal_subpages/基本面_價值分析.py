@@ -3,7 +3,7 @@ import random
 import pandas as pd
 
 from pages.profolios_personal_subpages.tw_stock_crawler_030 import get_stock_code_industry, get_tables_of_dbtablename, plotly_eps, read__monthly_report_from_sqlite
-from pages.profolios_personal_subpages.tw_stock_crawler_030_1 import read__pe_pb_from_sqlite, read_daily_price_from_sqlite_for_pe_pb,\
+from pages.profolios_personal_subpages.tw_stock_crawler_030_1 import read_pe_pb_from_sqlite, read_daily_price_from_sqlite_for_pe_pb,\
 merge_daily_pe_pb, daily_eps, merge_daily_pe_pb_eps, read_merged_df_2, plotly_yield, plotly_pb, plotly_pe
 
 
@@ -13,6 +13,7 @@ def fetch_data_prepared(stock_code):
         stock_code, stock_name, stock_size, stock_industry, related_data = get_stock_code_industry(stock_code)
     except Exception as e:
         st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write(f'錯誤訊息: {str(e)}')
         return None
     
     related_datas = []
@@ -29,12 +30,14 @@ def fetch_data_prepared(stock_code):
         dfs, suss_tables = get_tables_of_dbtablename(stock_code)
     except Exception as e:
         st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write(f'錯誤訊息: {str(e)}')
         return None, None
     
     # 創建可擴展區域
     with st.expander(f"用電腦更好看，已成功抓取到的資料"):
             if not dfs and not suss_tables:
                 st.write('很抱歉，沒有這檔股票的資料')
+                st.write(f'錯誤訊息: {str(e)}')
             else:
                 st.write(suss_tables)
                 
@@ -42,14 +45,25 @@ def fetch_data_prepared(stock_code):
     
     try:
         daily_df = read_daily_price_from_sqlite_for_pe_pb(stock_code, stock_size)
-        df_pe_pb = read__pe_pb_from_sqlite(stock_code, stock_size)
     except Exception as e:
         st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write(f'錯誤訊息: {str(e)}')
         return None
     
     # 創建可擴展區域_2
     with st.expander(f"已成功抓取到的盤後資料表"):
         st.write(daily_df)
+        
+        
+    try:
+        df_pe_pb = read_pe_pb_from_sqlite(stock_code, stock_size)
+    except Exception as e:
+        st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write(f'錯誤訊息: {str(e)}')
+        return None
+    
+    # 創建可擴展區域_2
+    with st.expander(f"已成功抓取到的盤後資料表"):
         st.write(df_pe_pb)
         
     

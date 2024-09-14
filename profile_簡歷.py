@@ -24,10 +24,9 @@ def main():
     
     # 
     data = {
-        'Python': ['Requests, Selenium', 'Pandas, Numpy', 'Plotly, Matplotlib, Jieba', 'Streamlit, Flask'],
-        '資料處理': ['ELK','Apache Spark','R language',''],
-        '資料庫': ['Mysql, SQLServer, SQlite', 'MongoDB','',''],
-        '視覺化': ['Tableau', 'Power BI','',''],
+        'Python': ['Pandas, Numpy', 'Plotly, Matplotlib, Jieba','Requests, Selenium', 'Streamlit'],
+        '資料庫': ['Mysql', 'MSSQL', 'SQlite', 'MongoDB'],
+        '視覺化': ['Tableau', 'Power BI','Excel',''],
         '雲端': ['GCP','Azure','','']
     }
     df = pd.DataFrame(data)
@@ -39,28 +38,24 @@ def main():
     
     
     
-    
     # 
-    st.write("學習筆記 : ")
-    st.write("[【Python 視覺化 : Matplotlib (Seaborn)、Plotly】](https://hackmd.io/@workcata/Hk6yp_ay6)")
-    url = "https://hackmd.io/@workcata/Hk6yp_ay6"
-    st.components.v1.iframe(url, height=350) 
-    st.subheader(" ")
-    st.write("[【Apache Spark 巨量資料探勘分析】ft.PySpark](https://hackmd.io/@workcata/rkQXQY2Ja)")
-    url = "https://hackmd.io/@workcata/rkQXQY2Ja"
-    st.components.v1.iframe(url, height=350) 
-    st.subheader(" ")
-    st.write("[【回歸模型評估: MAE、MAPE、SSE、MSE、RMSE、R²】](https://hackmd.io/@workcata/rk6YuVfNA)")
-    url = "https://hackmd.io/@workcata/rk6YuVfNA"
-    st.components.v1.iframe(url, height=350) 
-    st.subheader(" ")
-    st.write("[【 Mysql 系統權限操作】](https://hackmd.io/@workcata/BkWZ13NJ6)")
-    url = "https://hackmd.io/@workcata/BkWZ13NJ6"
-    st.components.v1.iframe(url, height=350) 
-    st.subheader(" ")
-    
-
- 
+    # st.write("學習筆記 : ")
+    # st.write("[【Python 視覺化 : Matplotlib (Seaborn)、Plotly】](https://hackmd.io/@workcata/Hk6yp_ay6)")
+    # url = "https://hackmd.io/@workcata/Hk6yp_ay6"
+    # st.components.v1.iframe(url, height=350) 
+    # st.subheader(" ")
+    # st.write("[【Apache Spark 巨量資料探勘分析】ft.PySpark](https://hackmd.io/@workcata/rkQXQY2Ja)")
+    # url = "https://hackmd.io/@workcata/rkQXQY2Ja"
+    # st.components.v1.iframe(url, height=350) 
+    # st.subheader(" ")
+    # st.write("[【回歸模型評估: MAE、MAPE、SSE、MSE、RMSE、R²】](https://hackmd.io/@workcata/rk6YuVfNA)")
+    # url = "https://hackmd.io/@workcata/rk6YuVfNA"
+    # st.components.v1.iframe(url, height=350) 
+    # st.subheader(" ")
+    # st.write("[【 Mysql 系統權限操作】](https://hackmd.io/@workcata/BkWZ13NJ6)")
+    # url = "https://hackmd.io/@workcata/BkWZ13NJ6"
+    # st.components.v1.iframe(url, height=350) 
+    # st.subheader(" ")
     
 
 if __name__ == '__main__':

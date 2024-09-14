@@ -10,7 +10,7 @@ def main():
     choice = float(st.text_input("ETF:1、股票:2", value='2'))
     buy_stock_price = float(st.text_input("買入金額 (元)", value='10'))
     quantity = float(st.text_input("股數", value='1000'))
-    sell_stock_price = float(st.text_input("賣出金額 (元)", value='10'))
+    sell_stock_price = float(st.text_input("賣出金額 (元)", value='11'))
     discount = float(st.text_input("券商折扣_(折)，沒有則放置10", value='10'))
             
 

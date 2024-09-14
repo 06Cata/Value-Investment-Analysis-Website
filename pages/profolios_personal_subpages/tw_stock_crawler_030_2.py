@@ -30,7 +30,7 @@ def download_daily_price_db(stock_size):
 def read_daily_price_from_sqlite_all(stock_code, stock_size):
     db_path1 = download_daily_price_db(stock_size)
     conn = sqlite3.connect(db_path1)
-    table_name = 'daily_price_2021' if stock_size == '上市' else 'daily_price_otc_2021'
+    table_name = 'daily_price_2019' if stock_size == '上市' else 'daily_price_otc_2019'
     
     query = f"SELECT * FROM {table_name} WHERE 證券代號={stock_code} ORDER BY 日期 ASC"
     daily_df_all = pd.read_sql_query(query, conn)

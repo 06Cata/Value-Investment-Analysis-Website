@@ -31,10 +31,10 @@ def download_and_save_pe_pb_db(stock_size):
     return temp_file_path
 
 
-def read__pe_pb_from_sqlite(stock_code, stock_size):
+def read_pe_pb_from_sqlite(stock_code, stock_size):
     db_path = download_and_save_pe_pb_db(stock_size)
     conn = sqlite3.connect(db_path)
-    table_name = 'daily_pe_pb_2021' if stock_size == '上市' else 'daily_pe_pb_otc_2021'
+    table_name = 'daily_pe_pb_2019' if stock_size == '上市' else 'daily_pe_pb_otc_2019'
 
     query = f"SELECT DISTINCT * FROM {table_name} WHERE 證券代號='{stock_code}' ORDER BY 年, 月, 日"
     df_pe_pb = pd.read_sql_query(query, conn)
@@ -65,7 +65,7 @@ def download_daily_price_db_for_pe_pb(stock_size):
 def read_daily_price_from_sqlite_for_pe_pb(stock_code, stock_size):
     db_path = download_daily_price_db_for_pe_pb(stock_size)
     conn = sqlite3.connect(db_path)
-    table_name = 'daily_price_2021' if stock_size == '上市' else 'daily_price_otc_2021'
+    table_name = 'daily_price_2019' if stock_size == '上市' else 'daily_price_otc_2019'
 
     query = f"SELECT * FROM {table_name} WHERE 證券代號='{stock_code}' ORDER BY 日期 ASC"
     daily_df = pd.read_sql_query(query, conn)
@@ -97,7 +97,10 @@ def merge_daily_pe_pb(stock_size, daily_df, df_pe_pb):
     
     merged_df.rename(columns={'殖利率(%)': '殖利率%'}, inplace=True)
 
-
+    # 刪除第一行中有 NaN 值的行，直到第一行沒有 NaN
+    while merged_df.iloc[0].isnull().any():
+        merged_df.drop(merged_df.index[0], inplace=True)
+        
     # 將 NaN 值填充為前一個有效值
     merged_df.fillna(method='ffill', inplace=True)
 

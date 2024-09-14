@@ -1537,9 +1537,8 @@ def plotly_debt_to_asset_ratio(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_dtar[result_df_dtar['年份'] == year]])
 
         elif count == 2:
-            if (result_df_dtar[(result_df_dtar['年份'] == year) & (result_df_dtar['季度'] == '1')].empty and
-                result_df_dtar[(result_df_dtar['年份'] == year) & (result_df_dtar['季度'] == '2')].empty and
-                result_df_dtar[(result_df_dtar['年份'] == year) & (result_df_dtar['季度'] == '3')].empty):
+            if (result_df_dtar[(result_df_dtar['年份'] == year) & (result_df_dtar['季度'] == '3')].empty and
+                result_df_dtar[(result_df_dtar['年份'] == year) & (result_df_dtar['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_dtar[result_df_dtar['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -1731,9 +1730,8 @@ def plotly_ratio_of_liabilities_to_assets(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_rolta[result_df_rolta['年份'] == year]])
 
         elif count == 2:
-            if (result_df_rolta[(result_df_rolta['年份'] == year) & (result_df_rolta['季度'] == '1')].empty and
-                result_df_rolta[(result_df_rolta['年份'] == year) & (result_df_rolta['季度'] == '2')].empty and
-                result_df_rolta[(result_df_rolta['年份'] == year) & (result_df_rolta['季度'] == '3')].empty):
+            if (result_df_rolta[(result_df_rolta['年份'] == year) & (result_df_rolta['季度'] == '3')].empty and
+                result_df_rolta[(result_df_rolta['年份'] == year) & (result_df_rolta['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_rolta[result_df_rolta['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -1934,9 +1932,8 @@ def plotly_business(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_business[result_df_business['年份'] == year]])
 
         elif count == 2:
-            if (result_df_business[(result_df_business['年份'] == year) & (result_df_business['季度'] == '1')].empty and
-                result_df_business[(result_df_business['年份'] == year) & (result_df_business['季度'] == '2')].empty and
-                result_df_business[(result_df_business['年份'] == year) & (result_df_business['季度'] == '3')].empty):
+            if (result_df_business[(result_df_business['年份'] == year) & (result_df_business['季度'] == '3')].empty and
+                result_df_business[(result_df_business['年份'] == year) & (result_df_business['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_business[result_df_business['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -2252,9 +2249,8 @@ def plotly_total_debt_equity_ratio(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_tder[result_df_tder['年份'] == year]])
 
         elif count == 2:
-            if (result_df_tder[(result_df_tder['年份'] == year) & (result_df_tder['季度'] == '1')].empty and
-                result_df_tder[(result_df_tder['年份'] == year) & (result_df_tder['季度'] == '2')].empty and
-                result_df_tder[(result_df_tder['年份'] == year) & (result_df_tder['季度'] == '3')].empty):
+            if (result_df_tder[(result_df_tder['年份'] == year) & (result_df_tder['季度'] == '3')].empty and
+                result_df_tder[(result_df_tder['年份'] == year) & (result_df_tder['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_tder[result_df_tder['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -2455,9 +2451,8 @@ def plotly_shareholders_equity(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_se[result_df_se['年份'] == year]])
 
         elif count == 2:
-            if (result_df_se[(result_df_se['年份'] == year) & (result_df_se['季度'] == '1')].empty and
-                result_df_se[(result_df_se['年份'] == year) & (result_df_se['季度'] == '2')].empty and
-                result_df_se[(result_df_se['年份'] == year) & (result_df_se['季度'] == '3')].empty):
+            if (result_df_se[(result_df_se['年份'] == year) & (result_df_se['季度'] == '3')].empty and
+                result_df_se[(result_df_se['年份'] == year) & (result_df_se['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_se[result_df_se['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -2721,9 +2716,8 @@ def plotly_roe(dfs):
 
 
         elif count == 2:
-            if (result_df_roe[(result_df_roe['年份'] == year) & (result_df_roe['季度'] == '1')].empty and
-                result_df_roe[(result_df_roe['年份'] == year) & (result_df_roe['季度'] == '2')].empty and
-                result_df_roe[(result_df_roe['年份'] == year) & (result_df_roe['季度'] == '3')].empty):
+            if (result_df_roe[(result_df_roe['年份'] == year) & (result_df_roe['季度'] == '3')].empty and
+                result_df_roe[(result_df_roe['年份'] == year) & (result_df_roe['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_roe[result_df_roe['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -2950,9 +2944,8 @@ def plotly_roa(dfs):
 
 
         elif count == 2:
-            if (result_df_roa[(result_df_roa['年份'] == year) & (result_df_roa['季度'] == '1')].empty and
-                result_df_roa[(result_df_roa['年份'] == year) & (result_df_roa['季度'] == '2')].empty and
-                result_df_roa[(result_df_roa['年份'] == year) & (result_df_roa['季度'] == '3')].empty):
+            if (result_df_roa[(result_df_roa['年份'] == year) & (result_df_roa['季度'] == '3')].empty and
+                result_df_roa[(result_df_roa['年份'] == year) & (result_df_roa['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_roa[result_df_roa['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -3243,9 +3236,8 @@ def plotly_days_sales_outstanding(dfs):
 
 
         elif count == 2:
-            if (result_df_dso[(result_df_dso['年份'] == year) & (result_df_dso['季度'] == '1')].empty and
-                result_df_dso[(result_df_dso['年份'] == year) & (result_df_dso['季度'] == '2')].empty and
-                result_df_dso[(result_df_dso['年份'] == year) & (result_df_dso['季度'] == '3')].empty):
+            if (result_df_dso[(result_df_dso['年份'] == year) & (result_df_dso['季度'] == '3')].empty and
+                result_df_dso[(result_df_dso['年份'] == year) & (result_df_dso['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_dso[result_df_dso['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -3782,9 +3774,8 @@ def plotly_fake(dfs):
 
 
         elif count == 2:
-            if (result_df_fake[(result_df_fake['年份'] == year) & (result_df_fake['季度'] == '1')].empty and
-                result_df_fake[(result_df_fake['年份'] == year) & (result_df_fake['季度'] == '2')].empty and
-                result_df_fake[(result_df_fake['年份'] == year) & (result_df_fake['季度'] == '3')].empty):
+            if (result_df_fake[(result_df_fake['年份'] == year) & (result_df_fake['季度'] == '3')].empty and
+                result_df_fake[(result_df_fake['年份'] == year) & (result_df_fake['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_fake[result_df_fake['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -4053,9 +4044,8 @@ def plotly_fixed_asset_turnover_ratio(dfs):
 
 
         elif count == 2:
-            if (result_df_fatr[(result_df_fatr['年份'] == year) & (result_df_fatr['季度'] == '1')].empty and
-                result_df_fatr[(result_df_fatr['年份'] == year) & (result_df_fatr['季度'] == '2')].empty and
-                result_df_fatr[(result_df_fatr['年份'] == year) & (result_df_fatr['季度'] == '3')].empty):
+            if (result_df_fatr[(result_df_fatr['年份'] == year) & (result_df_fatr['季度'] == '3')].empty and
+                result_df_fatr[(result_df_fatr['年份'] == year) & (result_df_fatr['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_fatr[result_df_fatr['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -4287,9 +4277,8 @@ def plotly_debt_paying_ability(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_dpa[result_df_dpa['年份'] == year]])
 
         elif count == 2:
-            if (result_df_dpa[(result_df_dpa['年份'] == year) & (result_df_dpa['季度'] == '1')].empty and
-                result_df_dpa[(result_df_dpa['年份'] == year) & (result_df_dpa['季度'] == '2')].empty and
-                result_df_dpa[(result_df_dpa['年份'] == year) & (result_df_dpa['季度'] == '3')].empty):
+            if (result_df_dpa[(result_df_dpa['年份'] == year) & (result_df_dpa['季度'] == '3')].empty and
+                result_df_dpa[(result_df_dpa['年份'] == year) & (result_df_dpa['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_dpa[result_df_dpa['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -4590,9 +4579,8 @@ def plotly_tax(dfs):
 
 
         elif count == 2:
-            if (result_df_tax[(result_df_tax['年份'] == year) & (result_df_tax['季度'] == '1')].empty and
-                result_df_tax[(result_df_tax['年份'] == year) & (result_df_tax['季度'] == '2')].empty and
-                result_df_tax[(result_df_tax['年份'] == year) & (result_df_tax['季度'] == '3')].empty):
+            if (result_df_tax[(result_df_tax['年份'] == year) & (result_df_tax['季度'] == '3')].empty and
+                result_df_tax[(result_df_tax['年份'] == year) & (result_df_tax['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_tax[result_df_tax['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -4797,8 +4785,8 @@ def plotly_ocf_icf_fcf(dfs):
         
 
         elif count == 2:
-            if (result_df_ocf[(result_df_ocf['年份'] == year) & (result_df_ocf['季度'] == '1')].empty and
-                result_df_ocf[(result_df_ocf['年份'] == year) & (result_df_ocf['季度'] == '2')].empty):
+            if (result_df_ocf[(result_df_ocf['年份'] == year) & (result_df_ocf['季度'] == '3')].empty and
+                result_df_ocf[(result_df_ocf['年份'] == year) & (result_df_ocf['季度'] == '4')].empty):
                 selected_rows = pd.concat([selected_rows, result_df_ocf[result_df_ocf['年份'] == year]])
                 
 
@@ -5915,9 +5903,8 @@ def plotly_cashncash_equivalents(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_cce[result_df_cce['年份'] == year]])
 
         elif count == 2:
-            if (result_df_cce[(result_df_cce['年份'] == year) & (result_df_cce['季度'] == '1')].empty and
-                result_df_cce[(result_df_cce['年份'] == year) & (result_df_cce['季度'] == '2')].empty and
-                result_df_cce[(result_df_cce['年份'] == year) & (result_df_cce['季度'] == '3')].empty):
+            if (result_df_cce[(result_df_cce['年份'] == year) & (result_df_cce['季度'] == '3')].empty and
+                result_df_cce[(result_df_cce['年份'] == year) & (result_df_cce['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_cce[result_df_cce['年份'] == year]])
                     
             # 4 不是空的，就提取
@@ -6140,9 +6127,8 @@ def plotly_3_rate(dfs):
 
 
         elif count == 2:
-            if (result_df_3_rate[(result_df_3_rate['年份'] == year) & (result_df_3_rate['季度'] == '1')].empty and
-                result_df_3_rate[(result_df_3_rate['年份'] == year) & (result_df_3_rate['季度'] == '2')].empty and
-                result_df_3_rate[(result_df_3_rate['年份'] == year) & (result_df_3_rate['季度'] == '3')].empty):
+            if (result_df_3_rate[(result_df_3_rate['年份'] == year) & (result_df_3_rate['季度'] == '3')].empty and
+                result_df_3_rate[(result_df_3_rate['年份'] == year) & (result_df_3_rate['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_3_rate[result_df_3_rate['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -6440,9 +6426,8 @@ def plotly_operating_margin_of_safety(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_omos[result_df_omos['年份'] == year]])
 
         elif count == 2:
-            if (result_df_omos[(result_df_omos['年份'] == year) & (result_df_omos['季度'] == '1')].empty and
-                result_df_omos[(result_df_omos['年份'] == year) & (result_df_omos['季度'] == '2')].empty and
-                result_df_omos[(result_df_omos['年份'] == year) & (result_df_omos['季度'] == '3')].empty):
+            if (result_df_omos[(result_df_omos['年份'] == year) & (result_df_omos['季度'] == '3')].empty and
+                result_df_omos[(result_df_omos['年份'] == year) & (result_df_omos['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_omos[result_df_omos['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -6667,9 +6652,8 @@ def plotly_year_revenue(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_year_revenue[result_df_year_revenue['年份'] == year]])
 
         elif count == 2:
-            if (result_df_year_revenue[(result_df_year_revenue['年份'] == year) & (result_df_year_revenue['季度'] == '1')].empty and
-                result_df_year_revenue[(result_df_year_revenue['年份'] == year) & (result_df_year_revenue['季度'] == '2')].empty and
-                result_df_year_revenue[(result_df_year_revenue['年份'] == year) & (result_df_year_revenue['季度'] == '3')].empty):
+            if (result_df_year_revenue[(result_df_year_revenue['年份'] == year) & (result_df_year_revenue['季度'] == '3')].empty and
+                result_df_year_revenue[(result_df_year_revenue['年份'] == year) & (result_df_year_revenue['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_year_revenue[result_df_year_revenue['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -6948,9 +6932,8 @@ def plotly_4q_revenue_growth_rate(dfs):
 
 
         elif count == 2:
-            if (result_df_grp[(result_df_grp['年份'] == year) & (result_df_grp['季度'] == '1')].empty and
-                result_df_grp[(result_df_grp['年份'] == year) & (result_df_grp['季度'] == '2')].empty and
-                result_df_grp[(result_df_grp['年份'] == year) & (result_df_grp['季度'] == '3')].empty):
+            if (result_df_grp[(result_df_grp['年份'] == year) & (result_df_grp['季度'] == '3')].empty and
+                result_df_grp[(result_df_grp['年份'] == year) & (result_df_grp['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_grp[result_df_grp['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -7303,9 +7286,8 @@ def plotly_non_operating_earnings(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_oi_p[result_df_oi_p['年份'] == year]])
 
         elif count == 2:
-            if (result_df_oi_p[(result_df_oi_p['年份'] == year) & (result_df_oi_p['季度'] == '1')].empty and
-                result_df_oi_p[(result_df_oi_p['年份'] == year) & (result_df_oi_p['季度'] == '2')].empty and
-                result_df_oi_p[(result_df_oi_p['年份'] == year) & (result_df_oi_p['季度'] == '3')].empty):
+            if (result_df_oi_p[(result_df_oi_p['年份'] == year) & (result_df_oi_p['季度'] == '3')].empty and
+                result_df_oi_p[(result_df_oi_p['年份'] == year) & (result_df_oi_p['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_oi_p[result_df_oi_p['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -7582,9 +7564,8 @@ def plotly_eps(dfs):
                 selected_rows = pd.concat([selected_rows, result_df_eps[result_df_eps['年份'] == year]])
 
         elif count == 2:
-            if (result_df_eps[(result_df_eps['年份'] == year) & (result_df_eps['季度'] == '1')].empty and
-                result_df_eps[(result_df_eps['年份'] == year) & (result_df_eps['季度'] == '2')].empty and
-                result_df_eps[(result_df_eps['年份'] == year) & (result_df_eps['季度'] == '3')].empty):
+            if (result_df_eps[(result_df_eps['年份'] == year) & (result_df_eps['季度'] == '3')].empty and
+                result_df_eps[(result_df_eps['年份'] == year) & (result_df_eps['季度'] == '4')].empty ):
                 selected_rows = pd.concat([selected_rows, result_df_eps[result_df_eps['年份'] == year]])
                 
             # 4 不是空的，就提取
@@ -7799,7 +7780,7 @@ def read__monthly_report_from_sqlite(stock_code):
 
     # 
     conn = sqlite3.connect(db_file_path)
-    table_name = 'monthly_report_2019'
+    table_name = 'monthly_report_2018'
     # query = f"SELECT DISTINCT * FROM {table_name} WHERE 公司代號='{stock_code}' GROUP BY 年份, CAST(月份 AS INTEGER)"
     query = f"SELECT DISTINCT * FROM {table_name} WHERE 公司代號='{stock_code}'"
     df_monthly = pd.read_sql_query(query, conn)

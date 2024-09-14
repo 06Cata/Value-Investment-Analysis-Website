@@ -691,8 +691,6 @@ def main():
         ##########################
         st.subheader("")
         # st.markdown("<a name='【償債能力】'></a>", unsafe_allow_html=True)
-        st.subheader("【償債能力】")
-        
         
         try:
             # 009 包成def
@@ -701,6 +699,7 @@ def main():
             if stock_industry == "產業別：金融保險業（其中金控公司係控股公司，其申報之「營業收入」係認列所有子公司損益之合計數）" or stock_industry == "產業別：金融業":
                 pass
             else:
+                st.subheader("【償債能力】")
                 st.markdown("#### ★ 流動、速動比率")
                 fig, fig2, average_current_ratio, average_quick_ratio  = plotly_debt_paying_ability(dfs)
                 
