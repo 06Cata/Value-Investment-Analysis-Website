@@ -10,12 +10,11 @@ def main():
     st.subheader("")
     st.subheader("")
     
-    
+
     st.subheader("數據分析")
-    st.write("**在職中 ( Apr, 2024 -  )**")
-    st.write("資訊服務出版業乙方，主要做資料研究及量化商業分析")
-    st.write("工作內容：使用pandas, numpy資料清整、依照客戶產業，下sql條件給資料工程師、與同事共同維護機器學習模型，資料文字向量化預測並優化、Tableau視覺化、Excel, PPT 商業報表建立，偶爾會需要爬蟲抓產業資料")
-    st.write("因為興趣，使用爬蟲+streamlit做了價值投資分析網，每季更新一次財報上傳github，並將ML,DL學習筆記, Kaggle作品放在HackMD")
+    st.write("**資訊服務出版業乙方 ( Apr, 2024 -  )**")
+    st.write("負責資料研究與量化商業分析，主要使用pandas, numpy進行資料清整、依照客戶產業，下sql條件給資料工程師、與同事共同維護機器學習模型，資料文字向量化預測並優化、Tableau視覺化、Excel, PPT 商業報表建立，偶爾會需要爬蟲抓產業資料")
+    st.write("因為興趣，使用爬蟲+streamlit做了價值投資分析網，每季更新一次財報上傳github，並自學ML, DL，將學習筆記, Kaggle作品放在HackMD")
     st.subheader("")
     st.subheader("")
     
