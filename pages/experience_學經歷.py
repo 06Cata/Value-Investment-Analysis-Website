@@ -20,7 +20,7 @@ def main():
     
     
     st.subheader("轉職班")
-    st.write("**文化大學推廣部+程式驅動 ( Mar, 2023 - Sep, 2023 ) 半年**")
+    st.write("**勞動部勞動力發展署 產業新尖兵計畫 ( Mar, 2023 - Sep, 2023 ) 半年**")
     st.write("在轉職班中，學習了Linux、Python、資料庫、視覺化、分佈式系統、Git等技能。後期利用實習的機會，學習ELK平臺，做了\
             「各縣市ESG公開資訊整合平臺」，也和組員接觸到機器學習分類和分群的方法，應用做了「ITRAVEL 智遊旅伴」")
     st.subheader("")
