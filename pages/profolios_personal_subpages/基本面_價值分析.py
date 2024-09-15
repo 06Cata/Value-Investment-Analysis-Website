@@ -12,7 +12,7 @@ def fetch_data_prepared(stock_code):
     try:
         stock_code, stock_name, stock_size, stock_industry, related_data = get_stock_code_industry(stock_code)
     except Exception as e:
-        st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write('很抱歉數據庫沒有這隻股票的產業資料、連不上數據庫，或出現其他錯誤')
         st.write(f'錯誤訊息: {str(e)}')
         return None
     
@@ -29,7 +29,7 @@ def fetch_data_prepared(stock_code):
     try:
         dfs, suss_tables = get_tables_of_dbtablename(stock_code)
     except Exception as e:
-        st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write('很抱歉數據庫沒有這隻股票的同業產業資料、連不上數據庫，或出現其他錯誤')
         st.write(f'錯誤訊息: {str(e)}')
         return None, None
     
@@ -46,7 +46,7 @@ def fetch_data_prepared(stock_code):
     try:
         daily_df = read_daily_price_from_sqlite_for_pe_pb(stock_code, stock_size)
     except Exception as e:
-        st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write('很抱歉數據庫沒有這隻股票的每日股價、連不上數據庫，或出現其他錯誤')
         st.write(f'錯誤訊息: {str(e)}')
         return None
     
@@ -58,7 +58,7 @@ def fetch_data_prepared(stock_code):
     try:
         df_pe_pb = read_pe_pb_from_sqlite(stock_code, stock_size)
     except Exception as e:
-        st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+        st.write('很抱歉數據庫沒有這隻股票的本益比、連不上數據庫，或出現其他錯誤')
         st.write(f'錯誤訊息: {str(e)}')
         return None
     
@@ -67,9 +67,16 @@ def fetch_data_prepared(stock_code):
         st.write(df_pe_pb)
         
     
-   
-    merged_df = merge_daily_pe_pb(stock_size, daily_df, df_pe_pb)
-    merge_eps_df = daily_eps(dfs)
+    try:
+        merged_df = merge_daily_pe_pb(stock_size, daily_df, df_pe_pb)
+    except Exception as e:
+        st.write('很抱歉出現其他錯誤')
+        st.write(f'錯誤訊息: {str(e)}')
+    try:   
+        merge_eps_df = daily_eps(dfs)
+    except Exception as e:
+        st.write('很抱歉出現其他錯誤')
+        st.write(f'錯誤訊息: {str(e)}')
 
     
     return  merge_daily_pe_pb_eps(merged_df, merge_eps_df), dfs, stock_code
@@ -205,7 +212,7 @@ def main():
         try:
             merged_df_2, dfs, stock_code = fetch_data_prepared(stock_code)
         except Exception as e:
-            st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤')
+            st.write('很抱歉數據庫沒有這隻股票、連不上數據庫，或出現其他錯誤fetch_data_prepared')
             return None
         
         if merged_df_2 is not None:
