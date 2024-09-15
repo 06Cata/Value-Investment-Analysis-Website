@@ -82,28 +82,32 @@ def read_daily_price_from_sqlite_for_pe_pb(stock_code, stock_size):
 # merge_daily_pe_pb 
 
 def merge_daily_pe_pb(stock_size, daily_df, df_pe_pb):
+#+
     import pandas as pd
- 
+
     daily_df['日期'] = pd.to_datetime(daily_df['日期'], format='%Y%m%d')
     df_pe_pb['日期'] = pd.to_datetime(df_pe_pb['日期'], format='%Y%m%d')
     df_pe_pb['股價淨值比'] = pd.to_numeric(df_pe_pb['股價淨值比'], errors='coerce')
 
     df_pe_pb.rename(columns={'股價淨值比': '股價淨值比'}, inplace=True)
-    
+
     if stock_size == '上市':
         merged_df = pd.merge(daily_df, df_pe_pb[['日期','股價淨值比','殖利率(%)']], on='日期', how='left')
     if stock_size == '上櫃':
         merged_df = pd.merge(daily_df, df_pe_pb[['日期','股價淨值比','殖利率(%)','本益比']], on='日期', how='left')
-    
+
     merged_df.rename(columns={'殖利率(%)': '殖利率%'}, inplace=True)
 
-    # 刪除第一行中有 NaN 值的行，直到第一行沒有 NaN
+    # 刪除第一行中有 NaN 值的行，直到第一行沒有 NaN#-
+    # Remove rows with NaN values until the first row without NaN values#+
     while merged_df.iloc[0].isnull().any():
-        merged_df.drop(merged_df.index[0], inplace=True)
-        
-    # 將 NaN 值填充為前一個有效值
-    merged_df.fillna(method='ffill', inplace=True)
-
+        merged_df = merged_df.drop(merged_df.index[0], inplace=True)
+    # 將 NaN 值填充為前一個有效值#-
+    # Fill NaN values with the previous valid value#+
+    # merged_df.fillna(method='ffill', inplace=True)
+    merged_df = merged_df.ffill()
+    
+    
     merged_df['年'] = merged_df['日期'].dt.year 
     merged_df['年份'] = merged_df['年'] -1911
     merged_df['月'] = merged_df['日期'].dt.month
@@ -122,9 +126,13 @@ def merge_daily_pe_pb(stock_size, daily_df, df_pe_pb):
     merged_df['季度'] = merged_df['日期'].dt.month.apply(get_quarter)
 
     merged_df['年份-季度'] = merged_df['年份'].astype(str)  + 'Q' + merged_df['季度'].astype(str) 
-    
-    merged_df.drop(columns=['年', '月', '日','年份','季度'], inplace=True)
 
+    merged_df.drop(columns=['年', '月', '日','年份','季度'], inplace=True)
+    
+    merged_df['本益比'] = pd.to_numeric(merged_df['本益比'], errors='coerce')
+    # 填充 NaN 值（例如使用前向填充）
+    merged_df = merged_df.ffill()
+    
     return merged_df
 
 
@@ -243,12 +251,15 @@ def daily_eps(dfs):
 #%%
 # merge eps
 # merge_daily_pe_pb_eps
+
 def merge_daily_pe_pb_eps(merged_df, merge_eps_df):
     merged_df_2 = pd.merge(merged_df, merge_eps_df[['年份-季度', '近四季累積本期淨利（淨損）_調整','近四季累積基本每股盈餘_調整']], on='年份-季度', how='left')
 
-    merged_df_2['近四季累積本期淨利（淨損）_調整'].fillna(method='ffill', inplace=True)
-    merged_df_2['近四季累積基本每股盈餘_調整'].fillna(method='ffill', inplace=True)
-    
+    # merged_df_2['近四季累積本期淨利（淨損）_調整'].fillna(method='ffill', inplace=True)
+    # merged_df_2['近四季累積基本每股盈餘_調整'].fillna(method='ffill', inplace=True)
+    merged_df_2['近四季累積本期淨利（淨損）_調整'] = merged_df_2['近四季累積本期淨利（淨損）_調整'].ffill() 
+    merged_df_2['近四季累積基本每股盈餘_調整'] = merged_df_2['近四季累積基本每股盈餘_調整'].ffill()
+
 
     # 
     merged_df_2['兩年前日期'] = merged_df_2['日期'] - pd.DateOffset(years=2)
@@ -282,7 +293,10 @@ def merge_daily_pe_pb_eps(merged_df, merge_eps_df):
         if selected_data.empty:
             return pd.NA
         
-        low_pe = round((selected_data['本益比'].min()+selected_data['本益比'].median())/2,2)
+        try:
+            low_pe = round((selected_data['本益比'].min()+selected_data['本益比'].median())/2,2)
+        except:
+            low_pe = pd.NA
         return low_pe
 
 
@@ -295,8 +309,10 @@ def merge_daily_pe_pb_eps(merged_df, merge_eps_df):
         selected_data = merged_df_2[(merged_df_2['日期'] >= two_years_ago_date) & (merged_df_2['日期'] < current_date)]
         if selected_data.empty:
             return pd.NA
-        
-        resonable_pe = round(selected_data['本益比'].median(),2)
+        try:
+            resonable_pe = round(selected_data['本益比'].median(),2)
+        except:
+            resonable_pe = pd.NA
         return resonable_pe
 
     def calculate_high_pe(row):
@@ -308,8 +324,10 @@ def merge_daily_pe_pb_eps(merged_df, merge_eps_df):
         selected_data = merged_df_2[(merged_df_2['日期'] >= two_years_ago_date) & (merged_df_2['日期'] < current_date)]
         if selected_data.empty:
             return pd.NA
-        
-        high_pe = round((selected_data['本益比'].max()+selected_data['本益比'].median())/2,2)
+        try:
+            high_pe = round((selected_data['本益比'].max()+selected_data['本益比'].median())/2,2)
+        except:
+            high_pe = pd.NA
         return high_pe
 
     def calculate_expensive_pe(row):
@@ -321,8 +339,10 @@ def merge_daily_pe_pb_eps(merged_df, merge_eps_df):
         selected_data = merged_df_2[(merged_df_2['日期'] >= two_years_ago_date) & (merged_df_2['日期'] < current_date)]
         if selected_data.empty:
             return pd.NA
-        
-        expensive_pe = round(selected_data['本益比'].max(),2)
+        try:
+            expensive_pe = round(selected_data['本益比'].max(),2)
+        except:
+            expensive_pe = pd.NA
         return expensive_pe
 
 
@@ -352,6 +372,12 @@ def merge_daily_pe_pb_eps(merged_df, merge_eps_df):
     merged_df_2['reasonable_pe'] = merged_df_2.apply(calculate_reasonable_pe, axis=1)
     merged_df_2['high_pe'] =  merged_df_2.apply(calculate_high_pe, axis=1)
     merged_df_2['expensive_pe'] =  merged_df_2.apply(calculate_expensive_pe, axis=1)
+    
+    merged_df_2['本益比'] = pd.to_numeric(merged_df_2['本益比'], errors='coerce')  # 將本益比轉換為數字，無效值轉為 NaN
+    # 可以選擇用 0 或其他適當值填充 NaNs
+    merged_df_2 = merged_df_2.fillna(0)
+
+
     # merged_df_2['近四季累積兩年前淨利'] = merged_df_2.apply(estimated_growth_rate, axis=1)
 
     # merged_df_2['預估成長率%'] = (merged_df_2['近四季累積本期淨利（淨損）_調整'] - merged_df_2['近四季累積兩年前淨利']) / merged_df_2['近四季累積兩年前淨利'] * 100
@@ -485,6 +511,8 @@ def plotly_yield(merged_df_2_date):
 
     merged_df_2_date['日期'] = pd.to_datetime(merged_df_2_date['日期'], format='%Y%m%d')
     merged_df_2_date['殖利率%'] = pd.to_numeric(merged_df_2_date['殖利率%'])
+    merged_df_2_date['pe'] = pd.to_numeric(merged_df_2_date['pe'], errors='coerce')
+
 
     # '----' -> NaN
     merged_df_2_date.replace('----', pd.NA, inplace=True)
@@ -495,6 +523,11 @@ def plotly_yield(merged_df_2_date):
     # 
     merged_df_2_date.dropna(inplace=True)
 
+    # 
+    if merged_df_2_date.empty:
+        print("DataFrame is empty. No data to plot.")
+        return fig
+    
     # 
     fig.add_trace(go.Scatter(x=merged_df_2_date['日期'], 
                             y=merged_df_2_date['收盤價'],
@@ -513,8 +546,18 @@ def plotly_yield(merged_df_2_date):
 
 
     # 
-    stock_code = merged_df_2_date['證券名稱'].iloc[0]
-    stock_name = merged_df_2_date['證券代號'].iloc[0]
+    # stock_code = merged_df_2_date['證券名稱'].iloc[0]
+    # stock_name = merged_df_2_date['證券代號'].iloc[0]
+
+    if len(merged_df_2_date) > 0:
+        stock_code = merged_df_2_date['證券名稱'].iloc[0]
+        stock_name = merged_df_2_date['證券代號'].iloc[0]
+    else:
+        stock_code = "Unknown"
+        stock_name = "Unknown"
+
+    y_range = [merged_df_2_date['收盤價'].min(), merged_df_2_date['收盤價'].max()]
+    y_range2 = [merged_df_2_date['殖利率%'].min(), merged_df_2_date['殖利率%'].max()]
 
     y_range = [merged_df_2_date['收盤價'].min(), merged_df_2_date['收盤價'].max()]
     y_range2 = [merged_df_2_date['殖利率%'].min(), merged_df_2_date['殖利率%'].max()]
@@ -624,6 +667,11 @@ def plotly_pe(merged_df_2_date):
     merged_df_2_date.dropna(inplace=True)
 
     # 
+    if merged_df_2_date.empty:
+        print("DataFrame is empty. No data to plot.")
+        return fig2, go.Figure()
+    
+    # 
     fig2.add_trace(go.Scatter(x=merged_df_2_date['日期'], 
                             y=merged_df_2_date['pe'],
                             mode='lines',
@@ -672,9 +720,16 @@ def plotly_pe(merged_df_2_date):
                             yaxis='y6'))
 
 
-    # 
-    stock_code = merged_df_2_date['證券名稱'].iloc[0]
-    stock_name = merged_df_2_date['證券代號'].iloc[0]
+    # # 
+    # stock_code = merged_df_2_date['證券名稱'].iloc[0]
+    # stock_name = merged_df_2_date['證券代號'].iloc[0]
+    
+    if len(merged_df_2_date) > 0:
+        stock_code = merged_df_2_date['證券名稱'].iloc[0]
+        stock_name = merged_df_2_date['證券代號'].iloc[0]
+    else:
+        stock_code = "Unknown"
+        stock_name = "Unknown"
 
     min1 = (merged_df_2_date['cheap_pe'].min()) * 0.4
     max1 = (merged_df_2_date['expensive_pe'].max()) * 0.3
