@@ -4,6 +4,14 @@ import numpy as np
 import plotly.express as px 
 from pages.profolios_personal_subpages import  為什麼要投資, 基本面_財報分析, 基本面_價值分析, 技術面比較, 買賣交易計算機, 複利計算機   # , 籌碼面
 
+
+# 捕捉模組導入錯誤
+try:
+    from pages.profolios_personal_subpages import 為什麼要投資, 基本面_財報分析, 基本面_價值分析, 技術面比較, 買賣交易計算機, 複利計算機  # , 籌碼面
+except ModuleNotFoundError as e:
+    st.error(f"Error importing modules: {e}")
+
+
 def main():
     st.title("價值投資分析網")
     st.write('''爬蟲爬取資產負債表、損益表、現金流量表、盤後資料存進sqlite，
