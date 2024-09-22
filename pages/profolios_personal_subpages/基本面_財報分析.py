@@ -21,7 +21,7 @@ def main():
     st.write('''資料來源: "公開資訊觀測站"，讀取資料庫 [(1)](https://github.com/06Cata/tw_financial_reports1)、[(2)](https://github.com/06Cata/tw_financial_reports2)、\
             [(3)](https://github.com/06Cata/tw_financial_reports3)。以上觀點僅供參考，並不構成任何交易建議或推薦。數值太接近，折線圖有可能重疊，可以分別點擊查看''')
 
-    stock_code = st.text_input("請輸入股票代碼：", value='2885')
+    stock_code = st.text_input("請輸入股票代碼：", value='2330')
 
     if st.button("查詢"):
         loading_messages = [

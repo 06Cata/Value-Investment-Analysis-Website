@@ -126,7 +126,7 @@ def main():
     st.write('''資料來源: "公開資訊觀測站"、"台灣證券交易所"、"證券櫃檯買賣中心"，讀取資料庫 [(1)](https://github.com/06Cata/tw_financial_reports1)、[(2)](https://github.com/06Cata/tw_financial_reports2)、\
             [(3)](https://github.com/06Cata/tw_financial_reports3)。以上觀點僅供參考，並不構成任何交易建議或推薦。直接拖拉圖片可以放大，右上角🏛️可以重置''')
     
-    stock_code = st.text_input("請輸入股票代碼：", value='2885')
+    stock_code = st.text_input("請輸入股票代碼：", value='2330')
     if st.button("查詢"):
         daily_df_all = fetch_data(stock_code)
         
