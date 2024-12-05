@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 
 def main():
     st.header("Catalina Kuo")
-    st.markdown('''<a href="https://06cata.github.io/Cata_web_WeHelp/">作品網站</a>、
+    st.markdown('''<a href="https://06cata.github.io/Cata_web_WeHelp/">網站</a>、
                 <a href="https://hackmd.io/@workcata">學習筆記</a>''', unsafe_allow_html=True)
 
     st.markdown('''聯絡方式 : <a href="mailto:catalinakuowork@gmail.com">Email</a>、
